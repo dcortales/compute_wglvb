@@ -2,8 +2,8 @@
 
 clear all; close all; clc
 
-year        = 1993:2019;
-file_path   ='E:\OMEGA3D\1993\dataset-omega-3d-rep-weekly_19930106T0000Z_P20200331T0000Z.nc';
+year        = ;
+file_path   ='...\OMEGA3D\1993\dataset-omega-3d-rep-weekly_19930106T0000Z_P20200331T0000Z.nc';
 X           = ncread(file_path,'lon'); 
 Y           = ncread(file_path,'lat');
 Z           = ncread(file_path,'depth');
@@ -13,7 +13,7 @@ dimlon      = length(X); dimlat = length(Y); dimdep = length(Z);
 
 for y = 1:length(year)
     disp(['Year: ', num2str(year(y))])
-    file_path   = cat(2,'E:\OMEGA3D\',num2str(year(y)),'\','dataset-omega-3d-rep-weekly_*.nc');
+    file_path   = cat(2,'...\OMEGA3D\',num2str(year(y)),'\','dataset-omega-3d-rep-weekly_*.nc');
 
     filename    = dir(file_path);
     numfiles    = length(filename);
@@ -28,15 +28,16 @@ for y = 1:length(year)
     wo = 0;
 
     for n = 1:numfiles
-        file    = strcat('E:\OMEGA3D\',num2str(year(y)),'\',filenames_cell(n));
+        file    = strcat('..\OMEGA3D\',num2str(year(y)),'\',filenames_cell(n));
         disp(file)
         wo      = wo + ncread(file,'wo')/86400;
     end
     wom(:,:,:,y) = wo/numfiles;
 end
+
 % Write data into NetCDF files:
 
-file_out = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OMEGA3D\\omega3d_glob_025_annual_verlev.nc';
+file_out = '..\OMEGA3D\omega3d_glob_025_annual_verlev.nc';
 
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',dimlon,'y',dimlat},'Format','netcdf4','Datatype','single')
