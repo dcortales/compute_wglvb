@@ -1,9 +1,5 @@
 % 5 x 5 box analysis
 clear all; close all; clc;
-% Mean
-% Correlation 
-% Variance
-% Sign change depth
 
 % All variables over [-180:180] grid
 %               name            hor. cov.       time. cov
@@ -16,17 +12,16 @@ clear all; close all; clc;
 % --------------------------------------------------------------------
 % BOX 5x5 definition
 lon_box5    = [-180:5:180]; lat_box5 = [-80:5:80];
-anno23      = [1993:2015];
+anno        = [1993:2015];
 ind         = [1:54]; isop = log(ind)./1.26 + 25;
 isopl1      = [21:0.25:26]; isop_uni = [isopl1 isop(5:end)];
 isopl       = isop_uni;
 % --------------------------------------------------------------------
 
 %% OCCITENS -----------------------------------------------------------
-anno = 1993:2015;
 
 disp('OCCITENS')
-path_occ = 'E:\\OLIV3_figures\\OCCITENS\\';
+path_occ = '...\OCCITENS\';
 
 % OCCITENS w total
 file_occ    = strcat(path_occ,'occitens_glob_025_annual_isolevm.nc');
@@ -38,7 +33,6 @@ for an = 1 : length(anno)
     count = [Inf, Inf, Inf, 1];
     
     w1           = ncread(file_occ,'w_occitens_isolev',start,count);
-    %h_isop      = ncread(file_occ,'h_isolev',start,count);
   
     % Shift longitude
     circshift_lim   = 1442-430;
@@ -50,15 +44,15 @@ for an = 1 : length(anno)
     wb_occitens(:,:,:,an) = box_interp_nt(lon1,lat1,isopl,w,lon_box5,lat_box5);
 end
 
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_annual_isolevm.mat','wb_occitens')
+save('...\OCCITENS\occitens_glob_5_annual_isolevm.mat','wb_occitens')
 
 %% Mixed layer mask OCCITENS
-h_isop = ncread('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_h_isolevm.nc','h_isolev'); % Load isopycnal depths
+h_isop = ncread('...\OCCITENS\occitens_glob_h_isolevm.nc','h_isolev'); % Load isopycnal depths computed in validation_1_annual_means
 mmld = nan([size(lon) length(anno)]);
 ii = 0;
 for an = anno
     ii = ii+1;
-    filemld = strcat('C:\\Users\\yago_\\Documents\\LOCEAN\Data\OCCITENS\\mld_annual_means\\ORCA025.L75_annual_mld_',num2str(an),'.nc');
+    filemld = strcat('...\OCCITENS\\mld_annual_means\ORCA025.L75_annual_mld_',num2str(an),'.nc'); % Load MLD data
     mmld(:,:,ii) = ncread(filemld,'somxl010');
 end
 mld = max(mmld,[],3); % Maximum of the whole period
@@ -76,13 +70,14 @@ mld_cont_bm(mld_cont_bm>0.5) = 1;
 
 % Save mld mask native grid:
 
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\oliv3_glob_5_mldmask.mat','mld_cont_bm')
+save('...\OCCITENS\oliv3_glob_5_mldmask.mat','mld_cont_bm')
 
 % Low resolution interpolation:
-wb_occitens_womld = box_interp_woMLD(lon1,lat1,isopl,anno23,w,mld_cont,lon_box5,lat_box5);
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_annual_isolevm_woMLD.mat','wb_occitens_womld')
 
-% OCCITENS w glvb --------------------------------------------------------------------
+wb_occitens_womld = box_interp_woMLD(lon1,lat1,isopl,anno23,w,mld_cont,lon_box5,lat_box5);
+save('...\OCCITENS\occitens_glob_5_annual_isolevm_woMLD.mat','wb_occitens_womld')
+
+%% OCCITENS w glvb --------------------------------------------------------------------
 for an = 1 : length(anno)
     disp(['Year: ',num2str(anno(an))])
     start = [1, 1, 1, an];
@@ -93,7 +88,7 @@ for an = 1 : length(anno)
     wb_glvb(:,:,:,an)     = box_interp_nt(lon1,lat1,isopl,w,lon_box5,lat_box5);
 end
 
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_wglvb_glob_5_annual_isolevm.mat','wb_glvb')
+save('...\OCCITENS\occitens_wglvb_glob_5_annual_isolevm.mat','wb_glvb')
 
 % Interpolation:
 for an = 1:length(anno)
@@ -105,17 +100,13 @@ for an = 1:length(anno)
     w           = circshift(w,circshift_lim,1);
     wb_glvb_womld(:,:,:,an) = box_interp_woMLD_nt(lon1,lat1,isopl,w,mld_cont,lon_box5,lat_box5);
 end
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_wglvb_glob_5_annual_isolevm_woMLD.mat','wb_glvb_womld')
+save('...\OCCITENS\occitens_wglvb_glob_5_annual_isolevm_woMLD.mat','wb_glvb_womld')
 
 %% OLIV3 --------------------------------------------------------------
-disp('OLIV3')
-file_oli    = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OLIV3\\oliv3_glob_025_ekf_annual_isolevm.nc';
+file_oli    = '...\OLIV3\oliv3_glob_025_ekf_annual_isolevm.nc';
 
-start = [1,1,1,1];
-count = [Inf,Inf,Inf,length(anno23)];
-
-w           = ncread(file_oli,'w_oliv3_isolev',start,count);
-h_isop      = ncread(file_oli,'h_isolev',start,count);
+w           = ncread(file_oli,'w_oliv3_isolev');     # Load OLIV3 velocities
+h_isop      = ncread(file_oli,'h_isolev');           # Load depth isopycnal levels
 lon         = ncread(file_oli,'longitude');
 lat         = ncread(file_oli,'latitude');
 
@@ -127,14 +118,12 @@ w           = circshift(w,circshift_lim,1);
 lon(lon>180) = lon(lon>180) - 360;
 lon1        = lon(:,300); lat1 = lat(300,:);
 
-
-%% Interpolation:
+% Low resolution interpolation:
 wb_oliv3    = box_interp(lon1,lat1,isopl,anno23,w,lon_box5,lat_box5);
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OLIV3\\oliv3_glob_5_annual_isolevm.mat','wb_oliv3')
+save('...\OLIV3\oliv3_glob_5_annual_isolevm.mat','wb_oliv3')
 
-%% Mixed layer mask
-% Maximum anual max MLD 
-patha = 'E:\\ARMOR3D\\';
+% Mixed layer mask:
+patha = '...\ARMOR3D\';
 mmlda = nan([size(lon,1) size(lat,2) length(anno)]);
 ii = 0;
 for an = anno
@@ -144,26 +133,21 @@ for an = anno
     load(filemlda)
     mmlda(:,:,ii) = mlotstm;
 end
-mld = max(mmlda,[],3); % Maximum of the whole 56yr period
-
-mld_cont    = mld_mask(lon,lat,isopl,mld,h_isop);
-
-mld_cont    = circshift(mld_cont,circshift_lim,1);
-
-%%
+mld         = max(mmlda,[],3); % Maximum of the whole 56yr period
 mld_cont    = mld_mask_0(lon,lat,isopl,mld,h_isop);
 mld_cont    = circshift(mld_cont,circshift_lim,1); 
-mld_cont_b = box_interp_nt(lon1,lat1,isopl,mld_cont,lon_box5,lat_box5);
-%%
+mld_cont_b  = box_interp_nt(lon1,lat1,isopl,mld_cont,lon_box5,lat_box5);
+
 mld_cont_bm = mld_cont_b;
 mld_cont_bm(mld_cont_bm<0.5) = NaN;
 mld_cont_bm(mld_cont_bm>0.5) = 1;
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_mldmask.mat','mld_cont_bm')
-%% Interpolation:
-wb_oliv3_womld = box_interp_woMLD(lon1,lat1,isopl,anno23,w,mld_cont,lon_box5,lat_box5);
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OLIV3\\oliv3_glob_5_annual_isolevm_woMLD.mat','wb_oliv3_womld')
+save('...\ARMOR3D\\occitens_glob_5_mldmask.mat','mld_cont_bm')
 
-%% OMEGA3D
+% Low resolution interpolation without Mixed-Layer:
+wb_oliv3_womld = box_interp_woMLD(lon1,lat1,isopl,anno23,w,mld_cont,lon_box5,lat_box5);
+save('...\OLIV3\oliv3_glob_5_annual_isolevm_woMLD.mat','wb_oliv3_womld')
+
+%% OMEGA3D -------------------------------------------------------------------
 disp('OMEGA3D')
 file_ome    = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OMEGA3D\\omega3d_glob_025_annual_isolevm.nc';
 
