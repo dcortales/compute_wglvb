@@ -3,7 +3,7 @@
 clear all; close all; clc
 
 year        = ;
-file_path   ='...\OMEGA3D\1993\dataset-omega-3d-rep-weekly_19930106T0000Z_P20200331T0000Z.nc';
+file_path   = '...\OMEGA3D\1993\dataset-omega-3d-rep-weekly_19930106T0000Z_P20200331T0000Z.nc';
 X           = ncread(file_path,'lon'); 
 Y           = ncread(file_path,'lat');
 Z           = ncread(file_path,'depth');
@@ -86,7 +86,7 @@ ncwriteatt(file_out,'time',     'units',        'year')
 
 %beta-plane geostrophic velocities
 ncwriteatt(file_out,'w_omega3d',  'axis',         'X,Y,X,T')
-ncwriteatt(file_out,'w_omega3d',  'long_name',    'quasi-geostrophic vertical velocities')
+ncwriteatt(file_out,'w_omega3d',  'long_name',    'quasi-geostrophic OMEGA3D vertical velocities')
 ncwriteatt(file_out,'w_omega3d',  'units','m/s')
 
 %% Step 2: Interpolate to yearly isopycnals over ARMOR3D grid
@@ -94,7 +94,7 @@ ncwriteatt(file_out,'w_omega3d',  'units','m/s')
 disp('Isopycnal interpolation:')
 anno        = 1993:2019;
 
-file_path   ='E:\OMEGA3D\1993\dataset-omega-3d-rep-weekly_19930106T0000Z_P20200331T0000Z.nc';
+file_path   ='...\OMEGA3D\1993\dataset-omega-3d-rep-weekly_19930106T0000Z_P20200331T0000Z.nc';
 X           = ncread(file_path,'lon'); 
 Y           = ncread(file_path,'lat');
 Y           = Y(32:end);   % ARMOR3D grid
@@ -110,7 +110,7 @@ isop_uni    = [isopl1 isop(5:end)];
 isopl       = isop_uni;
 % ----------------------------------------------------------------------
 
-filesn  = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ARMOR3D\\neutral_density\\dataset-armor-3d-rep-yearly-signtr_%04d.nc',anno(1));
+filesn  = sprintf('...\ARMOR3D\neutral_density\dataset-armor-3d-rep-yearly-signtr_%04d.nc',anno(1));
 depth   = ncread(filesn,'depth');
 lon     = ncread(filesn,'lon');
 lonc    = circshift(lon,length(lon)/2);
@@ -124,11 +124,11 @@ for an = 1:length(anno)
 
     % OLIV3 loading:
 
-    filo    = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OMEGA3D\\omega3d_glob_025_annual_verlev.nc';
+    filo    = '...\OMEGA3D\omega3d_glob_025_annual_verlev.nc';
     w_an    = ncread(filo,'w_omega3d',start,count);
 
     % Neutral density loading:
-    filesn  = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ARMOR3D\\neutral_density\\dataset-armor-3d-rep-yearly-signtr_%04d.nc',anno(an));
+    filesn  = sprintf('...\ARMOR3D\neutral_density\dataset-armor-3d-rep-yearly-signtr_%04d.nc',anno(an));
     sigma   = ncread(filesn,'signtr');
     sigmamd = circshift(sigma(:,:,1:41),length(lon)/2,1); % Eliminate ARMOR3D data below 1500m
 
@@ -144,8 +144,9 @@ for an = 1:length(anno)
     [w_isop(:,:,:,an), h_isop(:,:,:,an)] = isop_interp(w_an(:,32:end,:),dimlon,dimlat,dimdep,isopl,Z,sigmamdg);
 end
 
-% Create .nc file ----------------------------------------------------
-file_out = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OMEGA3D\\omega3d_glob_025_annual_isolevy.nc';
+% Write data into NetCDF files:
+
+file_out = '...\OMEGA3D\omega3d_glob_025_annual_isolevy.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',dimlon,'y',dimlat},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -195,7 +196,7 @@ ncwriteatt(file_out,'time',     'units',        'year')
 
 %quasi-geostrophic velocities
 ncwriteatt(file_out,'w_omega3d_isolev',  'axis',         'X,Y,X,T')
-ncwriteatt(file_out,'w_omega3d_isolev',  'long_name',    'quasi-geostrophic vertical velocities')
+ncwriteatt(file_out,'w_omega3d_isolev',  'long_name',    'quasi-geostrophic OMEGA3D vertical velocities')
 ncwriteatt(file_out,'w_omega3d_isolev',  'units','m/s')
 
 %depth isopycnal surfaces
