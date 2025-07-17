@@ -5,7 +5,11 @@ This repository provides the codes for obtaining the data and figures presented 
     - Isopycnal interpolation
     - Correlation coefficient computation between ERA5 w_Ek and OLIV3 w. 
 2. perfect_model_test
-    - `ekman_pumping_comp.py`: functions to compute Ekman pumping and beta-plane geostrophic vertical velocity (w_{glvb})
+    - `ekman_pumping_comp.py`: functions to compute Ekman pumping and beta-plane geostrophic vertical velocity (w_glvb)
+    - `OCCITENS_annual_means.py`: Annual averages of Ekman pumping, w_glvb and w_tot
+    - `OCCITENS_isopycnal_interpolation.m`: Isopycnal interpolation and spatial smoothing of w_glvb and w_tot
+    - `perfect_model_test_metrics.m`: Metrics for the perfect model test (Correlation coefficient, relative error and vertical gradient)
+    - `smooth2a.m`: smoothing function
 3. validation_1_annual_means
 4. validation_2_low_resolution
 
