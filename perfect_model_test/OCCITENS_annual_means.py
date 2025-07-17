@@ -3,7 +3,7 @@
 
 import numpy as np
 import xarray as xr
-from ekman_pumping_comp import ekman_pumping_occ, divergence
+from ekman_pumping_comp import ekman_pumping_occ, wglvb
 
 from netCDF4 import Dataset
 from netCDF4 import Dataset as datas
