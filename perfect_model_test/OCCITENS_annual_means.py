@@ -7,7 +7,6 @@ from ekman_pumping_comp import ekman_pumping_occ, divergence
 
 from netCDF4 import Dataset
 from netCDF4 import Dataset as datas
-import h5py
 
 '''
 Compute Ekman pumping and w in the ocean interior:
@@ -112,6 +111,57 @@ for aa in anno:
 
     ncfile.close()
 
+# %% Total vertical velocity
+
+for aa in anno:
+    print("Year: " + str(aa))
+    w = np.zeros((1442,1021,75,12)) # Annual matrix
+    for mm in np.arange(1,13):
+        print("Month: " + str(mm))
+        # Velocities:
+        pathwo      = r'E:\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridW.nc'%(aa,aa,mm)
+        
+        filew = xr.open_dataset(pathwo)
+        wm         = filevg.variables['vovecrtz'].values.T
+        w[:,:,:,mm-1] = wm
+    W = np.mean(w,3)  # Average over months
+
+    # Save .nc files:
+    print('Save annual variables:')
+    
+    path_out = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\w_annual_%s.nc'%(aa)
+    ncfile = datas(path_out,mode='w',format='NETCDF4_CLASSIC')
+    print(path_out)
+    
+    # Create dimensions: 
+    lon_dim             = ncfile.createDimension('x', 1442)     # latitude axis
+    lat_dim             = ncfile.createDimension('y', 1021)    # longitude axis
+    dep_dim             = ncfile.createDimension('z', 75)     # depth axis
+           
+    # Define two variables with the same names as dimensions,
+    # a conventional way to define "coordinate variables".
+    lat_file            = ncfile.createVariable('lat', np.float64, ('x','y',))
+    lat_file.units      = 'degrees_north'
+    lat_file.long_name  = 'latitude'
+    lon_file            = ncfile.createVariable('lon', np.float64, ('x','y',))
+    lon_file.units      = 'degrees_east'
+    lon_file.long_name  = 'longitude'
+    dep_file            = ncfile.createVariable('depth', np.float64, ('z',))
+    dep_file.units      = 'm'
+    dep_file.long_name  = 'depth'
+           
+    # Define a 3D variable to hold the data
+    w_file              = ncfile.createVariable('w',np.float64,('x','y','z'))
+    w_file.units        = 'm/s' # meters per second
+    w_file.standard_name= 'vertical velocity' 
+           
+    # Write variables:
+    lat_file[:,:] = ulat
+    lon_file[:,:] = ulon
+    dep_file[:]   = deptht  
+    w_file[:,:,:] = W
+    
+    ncfile.close()
 # %% Compute Ekman pumping
 
 for aa in anno:
@@ -170,157 +220,34 @@ for aa in anno:
 
     ncfile.close()
 
-# %% 
-Vg = [] #,Ug,Vg,MLD,WEK,DIVg   = [],[],[],[],[],[],[],[]                            # Complete data matrices
-
+# %% Compute geostrophic LVB vertical velocities
 
 for aa in anno:
     print("Year: " + str(aa))
-    wek = np.zeros((1442,1021,12))#,ug,vg,mld,wek,divg = [],[],[],[],[],[],[],[]                          # Annual matrices
+    vg = np.zeros((1442,1021,75))
+    # Geostrophic velocities:
     for mm in np.arange(1,13):
         print("Month: " + str(mm))
-        # Velocities:
-        pathuo      = r'E:\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridU.nc'%(aa,aa,mm)
-        pathvo      = r'E:\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridV.nc'%(aa,aa,mm)
-        #pathwo      = r'E:\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridW.nc'%(aa,aa,mm)
-        
-        fileu = xr.open_dataset(pathuo)
-        filev = xr.open_dataset(pathvo)
-        
-        #um   = fileu.variables['vozocrtx'].values.T
-        
-        txm,tym     = fileu.variables['sozotaux'].values.T,filev.variables['sometauy'].values.T   # Wind stress
-        
-        # Ekman pumping:
-        wekm        = ekman_pumping_occ(txm,tym,ulon,ulat,deptht,at1,at2,bk)
         
         # Geostrophic velocities:
-        #pathvgo     = r'E:\ORCA025.L75-OCCITENS.003\GRID\geo\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridVgeo.nc'%(aa,aa,mm)
-        #pathvgo     = r'E:\ORCA025.L75-OCCITENS.003\GRID\geo\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridVgeo.nc'%(aa,aa,mm)
-        
-        #filevg = xr.open_dataset(pathvgo)
-        
-        #vgm     = filevg.variables['vomecrty'].values.T
-        
-        #ugm1,vgm1   = np.zeros([len(ulat[:,0]),len(vlon[0,:]),len(deptht)]), np.zeros([len(ulat[:,0]),len(vlon[0,:]),len(deptht)]), np.zeros([len(ulat[:,0]),len(vlon[0,:]),len(deptht)])
-        #for k in np.arange(0,len(deptht)):
-        #    print(k)
-        #    ugm1[:,:,k] = np.squeeze(ugm[:,:,k].T)
-        #    vgm1[:,:,k] = np.squeeze(vgm[:,:,k].T)
-        
-        # Divergence:
-        #divgm       = divergence(vgm,vlon,vlat,deptht,bf,bi,e3t)
-        
-        # Mixed layer depth:
-        #pathmld     = r'F:\ORCA025.L75-OCCITENS.003\GRID\%s/ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridflxT.nc'%(aa,aa,mm)
-        #filemld     = xr.open_dataset(pathmld)
-        #mldm        = filemld.variables['somxl010']
-        
-        #u[:,:,:,mm] = um
-        #v[:,:,:,mm] = vm
-        wek[:,:,mm-1] = wekm
-        
-        #ug.append(ugm)
-        #vg.append(vgm)
-        #divg.append(divgm)
-        
-        #wek.append(wekm)
-        #vg[:,:,:,mm-1] = np.squeeze(vgm)
-        
-        #mld.append(mldm)
+        pathvgo     = r'E:\ORCA025.L75-OCCITENS.003\GRID\geo\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridVgeo.nc'%(aa,aa,mm)
+        filevg = xr.open_dataset(pathvgo)
+        vgm     = np.squeeze(filevg.variables['vomecrty'].values.T)    
+        vg += vgm
+    Vg = vg/12
     
-    # Save .nc files:
-    from netCDF4 import Dataset as datas
-    print('Save annual variables:')
-
-
-    #print('Save period-average variables:')
-    #path_out = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\div_monthly_%s.nc'%(aa)
-    #ncfile = datas(path_out,mode='w',format='NETCDF4_CLASSIC')
-    #print(path_out)
-
-    # Create dimensions: 
-    #lon_dim             = ncfile.createDimension('x', 1442)     # latitude axis
-    #lat_dim             = ncfile.createDimension('y', 1021)    # longitude axis
-    #dep_dim             = ncfile.createDimension('z', 75)     # depth axis
-    #dep_dim             = ncfile.createDimension('m', 12)     # depth axis
-           
-    # Define two variables with the same names as dimensions,
-    # a conventional way to define "coordinate variables".
-    #lat_file            = ncfile.createVariable('lat', np.float64, ('x','y',))
-    #lat_file.units      = 'degrees_north'
-    #lat_file.long_name  = 'latitude'
-    #lon_file            = ncfile.createVariable('lon', np.float64, ('x','y',))
-    #lon_file.units      = 'degrees_east'
-    #lon_file.long_name  = 'longitude'
-    #dep_file            = ncfile.createVariable('depth', np.float64, ('z',))
-    #dep_file.units      = 'm'
-    #dep_file.long_name  = 'depth'
-    #mon_file            = ncfile.createVariable('month', np.float64, ('m',))
-    #mon_file.units      = 'month'
-    #mon_file.long_name  = 'month'
-           
-    # Define a 3D variable to hold the data
-    #u_file              = ncfile.createVariable('u',np.float64,('x','y','z','m'))
-    #u_file.units        = 'm/s' # degrees Kelvin
-    #u_file.standard_name= 'zonal velocity' 
-
-    #v_file              = ncfile.createVariable('v',np.float64,('x','y','z','m'))
-    #v_file.units        = 'm/s' # degrees Kelvin
-    #v_file.standard_name= 'meridional velocity' 
-
-    #w_file              = ncfile.createVariable('w',np.float64,('x','y','z','m'))
-    #w_file.units        = 'm/s' # degrees Kelvin
-    #w_file.standard_name= 'vertical velocity' 
-
-    #ug_file              = ncfile.createVariable('ug',np.float64,('x','y','z','m'))
-    #ug_file.units        = 'm/s' # degrees Kelvin
-    #ug_file.standard_name= 'geostrophic zonal velocity' 
-
-    #vg_file              = ncfile.createVariable('vg',np.float64,('x','y','z','m'))
-    #vg_file.units        = 'm/s' # degrees Kelvin
-    #vg_file.standard_name= 'geostrophic meridional velocity' 
-
-    #dg_file              = ncfile.createVariable('div',np.float64,('x','y','z','m'))
-    #dg_file.units        = 'm/s' # degrees Kelvin
-    #dg_file.standard_name= 'geostrophic velocity divergence integral' 
-
-    #ek_file              = ncfile.createVariable('wek',np.float64,('x','y','m'))
-    #ek_file.units        = 'm/s' # degrees Kelvin
-    #ek_file.standard_name= 'Ekman pumping vertical velocity' 
-           
-    # Write latitudes, longitudes.
-    # Note: the ":" is necessary in these "write" statements
-    #lat_file[:,:],  lon_file[:,:],  dep_file[:],mon_file[:]        = ulat, ulon, deptht,month_num
-    #u_file[:,:,:],  v_file[:,:,:],  w_file[:,:,:],      = u,v,w
-    #w_file[:,:,:,:]      = w
-    #ug_file[:,:,:], vg_file[:,:,:], dg_file[:,:,:]      = Ug, Vg, DIVg
-    #dg_file[:,:,:,:]      = divg
-
-    #ncfile.close()   
+    # Ekman pumping:
+    pathek      = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\wek_annual_%d.nc'%(aa)
+    fileek      = xr.open_dataset(pathek)
+    wekm        = fileek.variables['wek'].values
     
-    
-    
-    #U.append(np.mean(u,2))
-    #V.append(np.mean(v,2))
-    WEK = np.mean(wek,2)
-    
-    #Ug.append(ug)
-    #Vg.append(vg)
-    #DIVg.append(divg)
-    
-    #WEK.append(wek)
-
-    #MLD.append(mld)
-    
-     
-    # Annual averages:
-    # Entire period averages:
-    
+    # Divergence:
+    wglvbm      = wglvb(Vg,wekm,vlon,vlat,deptht,bf,bi,e3t)
+        
     # Save .nc files:
     print('Save annual variables:')
     
-    path_out = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\wek_annual_%s.nc'%(aa)
+    path_out = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\wglvb_annual_%s.nc'%(aa)
     ncfile = datas(path_out,mode='w',format='NETCDF4_CLASSIC')
     print(path_out)
     
@@ -328,9 +255,8 @@ for aa in anno:
     lon_dim             = ncfile.createDimension('x', 1442)     # latitude axis
     lat_dim             = ncfile.createDimension('y', 1021)    # longitude axis
     dep_dim             = ncfile.createDimension('z', 75)     # depth axis
-           
-    # Define two variables with the same names as dimensions,
-    # a conventional way to define "coordinate variables".
+    
+    # Create variables:
     lat_file            = ncfile.createVariable('lat', np.float64, ('x','y',))
     lat_file.units      = 'degrees_north'
     lat_file.long_name  = 'latitude'
@@ -340,42 +266,12 @@ for aa in anno:
     dep_file            = ncfile.createVariable('depth', np.float64, ('z',))
     dep_file.units      = 'm'
     dep_file.long_name  = 'depth'
-           
-    # Define a 3D variable to hold the data
-    #u_file              = ncfile.createVariable('u',np.float64,('x','y','z'))
-    #u_file.units        = 'm\s' # degrees Kelvin
-    #u_file.standard_name= 'zonal velocity' 
-    
-    #v_file              = ncfile.createVariable('v',np.float64,('x','y','z'))
-    #v_file.units        = 'm/s' # degrees Kelvin
-    #v_file.standard_name= 'meridional velocity' 
-    
-    #w_file              = ncfile.createVariable('w',np.float64,('x','y','z'))
-    #w_file.units        = 'm/s' # degrees Kelvin
-    #w_file.standard_name= 'vertical velocity' 
-    
-    # ug_file              = ncfile.createVariable('ug',np.float64,('x','y','z'))
-    # ug_file.units        = 'm/s' # degrees Kelvin
-    # ug_file.standard_name= 'geostrophic zonal velocity' 
-    
-    # vg_file              = ncfile.createVariable('vg',np.float64,('x','y','z'))
-    # vg_file.units        = 'm/s' # degrees Kelvin
-    # vg_file.standard_name= 'geostrophic meridional velocity' 
-    
-    #dg_file              = ncfile.createVariable('div',np.float64,('x','y','z'))
-    #dg_file.units        = 'm/s' # degrees Kelvin
-    #dg_file.standard_name= 'geostrophic velocity divergence integral' 
-    
-    ek_file              = ncfile.createVariable('wek',np.float64,('x','y'))
-    ek_file.units        = 'm/s' # degrees Kelvin
-    ek_file.standard_name= 'Ekman pumping vertical velocity' 
-           
-    # Write latitudes, longitudes.
-    # Note: the ":" is necessary in these "write" statements
-    lat_file[:,:],  lon_file[:,:],  dep_file[:]         = ulat, ulon, deptht
-    #u_file[:,:,:],  v_file[:,:,:],  w_file[:,:,:],      = U, V, W
-    #w_file[:,:,:]      = W
-    #ug_file[:,:,:], vg_file[:,:,:], dg_file[:,:,:]      = Ug, Vg, DIVg
-    ek_file[:,:]      = WEK
+            
+    w_file              = ncfile.createVariable('div',np.float64,('x','y','z'))
+    w_file.units        = 'm/s' # meters per second
+    w_file.standard_name= 'beta-plane geostrophic vertical velocity' 
+            
+    lat_file[:,:],  lon_file[:,:],  dep_file[:]     = ulat, ulon, deptht
+    w_file[:,:,:]                                   = wglvbm
     
     ncfile.close()
