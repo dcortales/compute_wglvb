@@ -1,12 +1,26 @@
 # Scrips and function for paper Cortés-Morales et al. 2025
 This repository provides the codes for obtaining the data and figures presented in Cortes-Morales et al. 2025. It is subdivided in four folders:
 1. computation_oliv3
-2. perfect_model_test
-3. validation_1_annual_means
-4. validation_2_low_resolution
+    - Computation beta-plane vertical velocities from ARMOR3D and ERA5 data (OLIV3)
+    - Isopycnal interpolation
+    - Correlation coefficient computation between ERA5 w_Ek and OLIV3 w. 
+3. perfect_model_test
+    - 
+5. validation_1_annual_means
+6. validation_2_low_resolution
 
 ## Data
-All the data used in this repository can be accessed via the links provided in Cortés-Morales et al. 2025
+All the data used in this repository can be accessed via the links provided in Cortés-Morales et al. 2025:
+- OCCITENS
+- ARMOR3D
+- ERA5
+- OMEGA3D
+- ECCOv4r4
+- GLORYS12v1
+
+## Installation and Usage
+The neutral density fields for OCCITENS, ARMOR3D and ECCOv4r4, and the geostrophic meridional velocities for OCCITENS has been computed using the repository 'https://github.com/meom-group/CDFTOOLS'
+
 
 ## Requirements
 - Matlab
