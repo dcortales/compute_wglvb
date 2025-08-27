@@ -1,3 +1,4 @@
+# Figure 5: Vertical gradient proxi intercomparison
 
 import numpy as np
 import matplotlib as mpl
@@ -14,16 +15,14 @@ from matplotlib.legend_handler import HandlerLine2D, HandlerTuple
 from matplotlib.patches import Rectangle
 
 # GRID:
-meanm   = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\mean_w_womld.mat')
-lonbox5 = meanm['lon_box5m']
-latbox5 = meanm['lat_box5m']
+meanm               = sio.loadmat('...\intercomparison_metrics\mean_w_womld.mat')
+lonbox5             = meanm['lon_box5m']
+latbox5             = meanm['lat_box5m']
     
 # Mean:
-slp    = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\slope_w_55new.mat')['m_55']
+slp                 = sio.loadmat('...\intercomparison_metrics\slope_w_55new.mat')['m_55']
 
-## Vertical structure --------------------------------------------------------
-label_name = [r'$OLIV3$',r'$OMEGA3D$',r'$NEMO$',r'$GLORYS12v1$',r'$NEMO$ ($w_g$)',r'$ECCOv4r4$']
-scale       = 10**(-6)
+# Figure:
 
 cmap_LONM           = cm.get_cmap('BrBG_r')
 boundLONM           = np.arange(-1,1.1,0.1)
@@ -31,79 +30,6 @@ boundLONM           = np.arange(-1,1.1,0.1)
 boundLONM_ticks     = [-10, -8, -6, -4,-2, 0]
 boundLONM_tickss    = np.multiply(boundLONM_ticks,scale)
 norm_LONM           = mpl.colors.BoundaryNorm(boundLONM, cmap_LONM.N)
-
-
-fig, axes_r = plt.subplots(nrows=3, ncols=2,sharex=True,figsize=(18, 14),subplot_kw={"projection": ccrs.Miller(central_longitude=-60)}, layout='constrained',)
-proj = ccrs.Robinson(central_longitude=-60)
-
-fig.suptitle(r'Vertical gradient of $w$', fontsize = 28, y = 1.05)
-
-
-label_text = ['(a)','(b)','(c)','(d)','(e)','(f)']
-
-for ii,ax0 in enumerate(axes_r.flat):
-    
-    ax0.set_title(label_name[ii],fontsize=26)
-    ax0.set_extent([-180,180,-60,60],crs=ccrs.PlateCarree())
-    
-    wk = slp[:,:,ii]/scale
-    wk[latbox5==0] = np.nan
-    wk[latbox5==-5] = np.nan
-    ax0.pcolor(lonbox5+2.5,latbox5+2.5, wk, transform=ccrs.PlateCarree(), cmap = cmap_LONM, norm = norm_LONM)
-
-# Coastlines ------------------
-    land = cfeature.NaturalEarthFeature('physical', 'land', scale='50m', edgecolor='none', facecolor=cfeature.COLORS['land'], linewidth=.25)
-    ax0.add_feature(land, facecolor='k')
-
-# Label -----------------------
-    props = dict(boxstyle='round', facecolor='none', edgecolor='none', alpha=1)  # bbox features
-    ax0.text(0, 1.13, label_text[ii], transform=ax0.transAxes, fontsize=26, verticalalignment='top', bbox=props)
-    
-# Grid ------------------------
-    gl = ax0.gridlines(draw_labels=True, 
-                       xlocs=range(-180, 181, 90), 
-                       ylocs=range(-60, 61, 30), 
-                       color='gray', zorder=1)
-
-    gl.right_labels = False if ii % 2 == 0 else True  # Right labels only for right column
-    gl.left_labels = True if ii % 2 == 0 else False   # Left labels only for left column
-    gl.bottom_labels = True if ii >= 4 else False     # Bottom labels for last row
-    gl.top_labels = False                             # No top labels to avoid clutter 
-    
-    gl.xlabel_style = {"size": 16, "color": "black"}
-    gl.ylabel_style = {"size": 16, "color": "black"}
-    
-    for spine in ax0.spines.values():
-        spine.set_linewidth(2)
-    ax0.tick_params(axis="both", width=2, length=6, labelsize=12)
-    
-# Colorbar: 
-scale       = 10**(-6)
-
-cmap_LONM           = cm.get_cmap('BrBG_r')
-boundLONM           = np.arange(-1,1.1,0.1)
-boundLONM_ticks     = np.arange(-1,1.2,0.2)
-norm_LONM           = mpl.colors.BoundaryNorm(boundLONM, cmap_LONM.N)
-
-cbar = plt.colorbar(
-        mpl.cm.ScalarMappable(cmap=cmap_LONM, norm = norm_LONM),
-    extend='both',
-    ticks=boundLONM_ticks,
-    spacing='proportional',
-    #orientation='horizontal',
-    shrink=0.5,
-    ax=axes_r,
-    location='bottom',
-    #pad = 0.5,
-)
-
-cbar.ax.tick_params(labelsize=20)
-cbar.set_label(label=r'$(10^{-6} m$ $s^{-1}$ $/$ $kg$ $m^{-3})$',size=22)
-
-#plt.savefig('6_vertical_structure_55.png', bbox_inches='tight', dpi=300)
-
-# %% No NEMO
-
 
 label_name = [r'(a) $OLIV3$',r'(b) $OMEGA3D$',r'(c) $GLORYS12v1$',r'(d) $ECCOv4r4$']
 
@@ -127,10 +53,6 @@ for ii,ax0 in enumerate(axes_r.flat):
 # Coastlines ------------------
     land = cfeature.NaturalEarthFeature('physical', 'land', scale='50m', edgecolor='none', facecolor=cfeature.COLORS['land'], linewidth=.25)
     ax0.add_feature(land, facecolor='k')
-
-# Label -----------------------
-    # props = dict(boxstyle='round', facecolor='none', edgecolor='none', alpha=1)  # bbox features
-    # ax0.text(0, 1.13, label_text[ii], transform=ax0.transAxes, fontsize=26, verticalalignment='top', bbox=props)
     
 # Grid ------------------------
     gl = ax0.gridlines(draw_labels=True, 
@@ -162,7 +84,6 @@ cbar = plt.colorbar(
     extend='both',
     ticks=boundLONM_ticks,
     spacing='proportional',
-    #orientation='horizontal',
     shrink=0.5,
     ax=axes_r,
     location='bottom',
@@ -172,7 +93,7 @@ cbar = plt.colorbar(
 cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$(10^{-6} m$ $s^{-1}$ $/$ $kg$ $m^{-3})$',size=20)
 
-plt.savefig('6_vertical_structure_55_VF.png', bbox_inches='tight', dpi=300)
+plt.savefig('figure5_VF.png', bbox_inches='tight', dpi=300)
 
 # %%
 slp    = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\slope_w_55new_26_5.mat')['m_55']
@@ -230,7 +151,7 @@ boundLONM_ticks     = np.arange(-1,1.2,0.2)
 norm_LONM           = mpl.colors.BoundaryNorm(boundLONM, cmap_LONM.N)
 
 cbar = plt.colorbar(
-        mpl.cm.ScalarMappable(cmap=cmap_LONM, norm = norm_LONM),
+        mpl.cm.ScalarMappable(cmap=, norm = norm_LONM),
     extend='both',
     ticks=boundLONM_ticks,
     spacing='proportional',
@@ -245,3 +166,4 @@ cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$(10^{-6} m$ $s^{-1}$ $/$ $kg$ $m^{-3})$',size=20)
 
 plt.savefig('6_vertical_structure_55_appendix_VF.png', bbox_inches='tight', dpi=300)
+
