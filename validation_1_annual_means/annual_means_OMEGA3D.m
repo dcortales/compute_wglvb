@@ -1,4 +1,4 @@
-% OLIV3 anual means
+% OMEGA3D anual means
 
 clear all; close all; clc
 
