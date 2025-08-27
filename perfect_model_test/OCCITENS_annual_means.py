@@ -186,7 +186,7 @@ for aa in anno:
     # Save .nc files:
     print('Save annual variables:')
 
-    path_out = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\wek_annual_%s.nc'%(aa)
+    path_out = r'path_out\wek_annual_%s.nc'%(aa)
     ncfile = datas(path_out,mode='w',format='NETCDF4_CLASSIC')
     print(path_out)
 
@@ -247,7 +247,7 @@ for aa in anno:
     # Save .nc files:
     print('Save annual variables:')
     
-    path_out = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\wglvb_annual_%s.nc'%(aa)
+    path_out = r'path_out\wglvb_annual_%s.nc'%(aa)
     ncfile = datas(path_out,mode='w',format='NETCDF4_CLASSIC')
     print(path_out)
     
