@@ -21,7 +21,7 @@ isopl       = isop_uni;
 %% OCCITENS -----------------------------------------------------------
 
 disp('OCCITENS')
-path_occ = '...\OCCITENS\';
+path_occ    = '...\OCCITENS\';
 
 % OCCITENS w total
 file_occ    = strcat(path_occ,'occitens_glob_025_annual_isolevm.nc');
@@ -149,7 +149,7 @@ save('...\OLIV3\oliv3_glob_5_annual_isolevm_woMLD.mat','wb_oliv3_womld')
 
 %% OMEGA3D -------------------------------------------------------------------
 disp('OMEGA3D')
-file_ome    = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OMEGA3D\\omega3d_glob_025_annual_isolevm.nc';
+file_ome    = '...\OMEGA3D\omega3d_glob_025_annual_isolevm.nc';
 
 start = [1,1,1,1];
 count = [Inf,Inf,Inf,length(anno23)];
@@ -160,7 +160,7 @@ lat         = ncread(file_ome,'latitude');
 lon1        = lon(:,300); lat1 = lat(300,:);
 %%
 wb_omega3d  = box_interp(lon1,lat1,isopl,anno23,w,lon_box5,lat_box5);
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OMEGA3D\\omega3d_glob_5_annual_isolevm.mat','wb_omega3d')
+save('...\OMEGA3D\omega3d_glob_5_annual_isolevm.mat','wb_omega3d')
 %%
 % Mixed layer mask
 % Maximum anual max MLD 
@@ -180,11 +180,11 @@ mld_cont    = mld_mask(lon,lat,isopl,mld,h_isop);
 
 %% Interpolation:
 wb_omega3d_womld = box_interp_woMLD(lon1,lat1,isopl,anno23,w,mld_cont,lon_box5,lat_box5);
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OMEGA3D\\omega3d_glob_5_annual_isolevm_woMLD.mat','wb_omega3d_womld')
+save('...\OMEGA3D\omega3d_glob_5_annual_isolevm_woMLD.mat','wb_omega3d_womld')
 
-%% ECCO
+%% ECCO -----------------------------------------------------------
 disp('ECCO')
-file_ecc    = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_1_annual_isolevm.nc';
+file_ecc    = '...\ECCO\ecco_glob_1_annual_isolevm.nc';
 
 start = [1,1,1,1];
 count = [Inf,Inf,Inf,length(anno23)];
@@ -196,7 +196,7 @@ lat         = ncread(file_ecc,'latitude');
 %%
 
 wb_ecco     = box_interp(lon,lat,isopl,anno23,w,lon_box5,lat_box5);
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_5_annual_isolevm.mat','wb_ecco')
+save('...\ECCO\ecco_glob_5_annual_isolevm.mat','wb_ecco')
 
 %% Mixed layer mask
 % Maximum annual max MLD 
@@ -222,14 +222,14 @@ mld_cont_b = box_interp_nt(lon,lat,isopl,mld_cont,lon_box5,lat_box5);
 mld_cont_bm = mld_cont_b;
 mld_cont_bm(mld_cont_bm<0.5) = NaN;
 mld_cont_bm(mld_cont_bm>0.5) = 1;
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\ecco_glob_5_mldmask.mat','mld_cont_bm')
+save('...\ECCO\ecco_glob_5_mldmask.mat','mld_cont_bm')
 %%
 wb_ecco_womld = box_interp_woMLD(lon,lat,isopl,anno23,w,mld_cont,lon_box5,lat_box5);
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_5_annual_isolevm_woMLD.mat','wb_ecco_womld')
+save('...\ECCO\ecco_glob_5_annual_isolevm_woMLD.mat','wb_ecco_womld')
 
-%% GLORYS
+%% GLORYS ---------------------------------------------------------------
 disp('GLORYS')
-file_glo    = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\GLORYS\\glorys_glob_025_annual_isolevm.nc';
+file_glo    = '...\GLORYS\glorys_glob_025_annual_isolevm.nc';
 
 start = [1,1,1,1];
 count = [Inf,Inf,Inf,length(anno23)];
@@ -254,16 +254,16 @@ w           = circshift(w,circshift_lim,1);
 lon1        = lon(:,300); lat1 = lat(300,:);
 %%
 wb_glorys   = box_interp(lon1,lat1,isopl,anno23,w,lon_box5,lat_box5);
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\GLORYS\\glorys_glob_5_annual_isolevm.mat','wb_glorys')
+save('...\GLORYS\glorys_glob_5_annual_isolevm.mat','wb_glorys')
 
 %% Mixed layer mask
 % Maximum annual max MLD 
-h_isop = ncread('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_h_isolevm.nc','h_isolev');
+h_isop = ncread('...\OCCITENS\occitens_glob_h_isolevm.nc','h_isolev');
 mmld        = nan([size(lon) length(anno23)]);
 ii = 0;
 for an = anno23
     ii = ii+1;
-    filemld = strcat('C:\\Users\\yago_\\Documents\\LOCEAN\Data\OCCITENS\\mld_annual_means\\ORCA025.L75_annual_mld_',num2str(an),'.nc');
+    filemld = strcat('...\OCCITENS\mld_annual_means\ORCA025.L75_annual_mld_',num2str(an),'.nc');
     mmld(:,:,ii) = ncread(filemld,'somxl010');
 end
 mld = max(mmld,[],3); % Maximum of the whole period
@@ -273,23 +273,138 @@ mld_cont    = circshift(mld_cont,circshift_lim,1);
 
 % Interpolation:
 wb_glorys_womld = box_interp_woMLD(lon1,lat1,isopl,anno23,w,mld_cont,lon_box5,lat_box5);
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\GLORYS\\glorys_glob_5_annual_isolevm_woMLD.mat','wb_glorys_womld')
+save('...\GLORYS\glorys_glob_5_annual_isolevm_woMLD.mat','wb_glorys_womld')
 
 %% Merging all datasets:
 
 % Including MLD:
-wb(:,:,:,:,1)       = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OLIV3\\oliv3_glob_5_annual_isolevm.mat')));
-wb(:,:,:,:,2)       = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OMEGA3D\\omega3d_glob_5_annual_isolevm.mat')));
-wb(:,:,:,:,3)       = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_annual_isolevm.mat')));
-wb(:,:,:,:,4)       = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\GLORYS\\glorys_glob_5_annual_isolevm.mat')));
-wb(:,:,:,:,5)       = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_wglvb_glob_5_annual_isolevm.mat')));
-wb(:,:,:,:,6)       = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_5_annual_isolevm.mat')));
+wb(:,:,:,:,1)       = cell2mat(struct2cell(load('...\OLIV3\oliv3_glob_5_annual_isolevm.mat')));
+wb(:,:,:,:,2)       = cell2mat(struct2cell(load('...\OMEGA3D\omega3d_glob_5_annual_isolevm.mat')));
+wb(:,:,:,:,3)       = cell2mat(struct2cell(load('...\OCCITENS\occitens_glob_5_annual_isolevm.mat')));
+wb(:,:,:,:,4)       = cell2mat(struct2cell(load('...\GLORYS\glorys_glob_5_annual_isolevm.mat')));
+wb(:,:,:,:,5)       = cell2mat(struct2cell(load('...\OCCITENS\occitens_wglvb_glob_5_annual_isolevm.mat')));
+wb(:,:,:,:,6)       = cell2mat(struct2cell(load('...\ECCO\ecco_glob_5_annual_isolevm.mat')));
 wb(:,:,:,1:end-1,6) = wb(:,:,:,2:end,6);
 wb(:,:,:,end,6)     = NaN;
 %% Excluding MLD:
-wb_wom(:,:,:,:,1)   = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OLIV3\\oliv3_glob_5_annual_isolevm_woMLD.mat')));
-wb_wom(:,:,:,:,2)   = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OMEGA3D\\omega3d_glob_5_annual_isolevm_woMLD.mat')));
-wb_wom(:,:,:,:,3)   = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_annual_isolevm_woMLD.mat')));
-wb_wom(:,:,:,:,4)   = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\GLORYS\\glorys_glob_5_annual_isolevm_woMLD.mat')));
-wb_wom(:,:,:,:,5)   = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_wglvb_glob_5_annual_isolevm_woMLD.mat')));
-wb_wom(:,:,:,:,6)   = cell2mat(struct2cell(load('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_5_annual_isolevm_woMLD.mat')));
+wb_wom(:,:,:,:,1)   = cell2mat(struct2cell(load('...\OLIV3\oliv3_glob_5_annual_isolevm_woMLD.mat')));
+wb_wom(:,:,:,:,2)   = cell2mat(struct2cell(load('...\OMEGA3D\omega3d_glob_5_annual_isolevm_woMLD.mat')));
+wb_wom(:,:,:,:,3)   = cell2mat(struct2cell(load('...\OCCITENS\occitens_glob_5_annual_isolevm_woMLD.mat')));
+wb_wom(:,:,:,:,4)   = cell2mat(struct2cell(load('...\GLORYS\glorys_glob_5_annual_isolevm_woMLD.mat')));
+wb_wom(:,:,:,:,5)   = cell2mat(struct2cell(load('...\OCCITENS\occitens_wglvb_glob_5_annual_isolevm_woMLD.mat')));
+wb_wom(:,:,:,:,6)   = cell2mat(struct2cell(load('...\ECCO\ecco_glob_5_annual_isolevm_woMLD.mat')));
+
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   INTERCOMPARISON RESULTS
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Mean
+% Variance
+% Correlation coefficient
+% RMSE
+% vertical structure (vertical slope)
+
+%% Mean -------------------------------------------------------------
+wm                      = squeeze(mean(wb,4));
+[lat_box5m,lon_box5m]   = meshgrid(lat_box5,lon_box5);
+
+save('...\intercomparison_metrics\mean_w.mat','wm','lon_box5m','lat_box5m')
+
+%% Mean without MLD -------------------------------------------------------------
+wm                      = squeeze(mean(wb_wom,4));
+[lat_box5m,lon_box5m]   = meshgrid(lat_box5,lon_box5);
+
+save('...\intercomparison_metrics\mean_w_womld.mat','wm','lon_box5m','lat_box5m')
+
+%% Variance ---------------------------------------------------------
+wv                      = log10(var(wb,0,4,'omitmissing'));
+[lat_box5m,lon_box5m]   = meshgrid(lat_box5,lon_box5);
+
+save('...\intercomparison_metrics\variance_w.mat','wv','lon_box5m','lat_box5m')
+
+%% Correlation coefficient ------------------------------------------
+
+rho     = nan([length(lon_box5) length(lat_box5) 71 6 6]);
+pval    = nan([length(lon_box5) length(lat_box5) 71 6 6]);
+
+for k = 1:length(isopl)
+    for i = 1:length(lon_box5)
+        for j = 1:length(lat_box5)
+            for ii = 1:5
+                for jj = ii+1:6
+                    [R,P]               = corrcoef(squeeze(wb(i,j,k,:,ii)),squeeze(wb(i,j,k,:,jj)),'rows','complete','Alpha',0.05);
+                    rho(i,j,k,ii,jj)    = R(1,2);
+                    pval(i,j,k,ii,jj)   = P(1,2);
+                end
+            end
+        end
+    end
+end
+
+% Significance ---------------------------------------------------
+
+rho(rho == 0)   = NaN;
+pval(pval == 0) = NaN;
+%
+alfa            = 0.05;
+matsigcorr      = nan(size(pval)); 
+
+for i = 1:length(lon_box5)
+    for j = 1:length(lat_box5)
+        for ii = 1:5
+            for jj = 1:6
+                for k = 1:length(isopl)
+                    if pval(i,j,k,ii,jj) <= alfa
+                        matsigcorr(i,j,k,ii,jj) = 1;
+                    else
+                        matsigcorr(i,j,k,ii,jj) = NaN;
+                    end 
+                end
+            end
+        end
+    end
+end
+
+% RMSE ------------------------------------------------------------
+
+RMSE = nan([length(lon_box5) length(lat_box5) 71 6 6]);
+ 
+for ii = 1:5
+    for jj = ii+1:6
+        RMSE(:,:,:,jj,ii) = sqrt(mean((wb(:,:,:,:,jj) - wb(:,:,:,:,ii)).^2,4,'omitmissing'));
+    end
+end
+
+save('...\intercomparison_metrics\R_sign_RMSE_w.mat','rho','matsigcorr','RMSE','lon_box5m','lat_box5m')
+
+%% Vertical gradient ------------------------------------------------- 
+% Slope fixed (25-27)
+lower_ind = 22; %27 sigma
+
+upper_ind       = ones([length(lon_box5) length(lat_box5) 6]).*29;
+m_55            = nan([length(lon_box5) length(lat_box5) 6]); 
+
+for i = 1:length(lon_box5)
+    for j = 1:length(lat_box5)
+        for ij = 1:6
+            ao = 0;
+            for k = 1:length(isopl)-1
+                if isnan(wm(i,j,k,ij)) == 0 && ao == 0
+                    ao = 1;
+                    upper_ind(i,j,ij) = k+1;
+                end
+            end
+            if ao == 1
+                m_55(i,j,ij) = (abs(wm(i,j,lower_ind,ij))-abs(wm(i,j,upper_ind(i,j,ij),ij)))/(isopl(lower_ind)-isopl(upper_ind(i,j,ij)));
+            else
+                m_55(i,j,ij) = NaN;
+            end
+        end
+    end
+end
+
+m_55(abs(m_55)>4*10^(-6))     = NaN;
+
+save('...\intercomparison_metrics\slope_w_55new_26_5.mat','m_55')
+
