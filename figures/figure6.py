@@ -1,4 +1,4 @@
-# Figure 7: Variance intercomparison
+# Figure 6: Variance intercomparison
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -121,4 +121,5 @@ cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$variance$ $[log_{10}(m^2$ $s^{-2)}]$',size=20)
 
 
-plt.savefig('figure7_VF.png', bbox_inches='tight', dpi=300)
+plt.savefig('figure6_VF.png', bbox_inches='tight', dpi=300)
+
