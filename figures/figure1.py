@@ -22,6 +22,8 @@ filo            = '...\OLIV3\oliv3_glob_025_ekf_annual_isolevm_5filtr.nc'
 file            = xr.open_dataset(filo)
 lon, lat, iso   = file.variables['longitude'].values.T, file.variables['latitude'].values.T, file.variables['isolev'].values.T
 w               = np.mean(file.variables['w_oliv3_isolevf'].values.T,3)
+MLDm            = sio.loadmat('...\OLIV3\MLD_ARMOR3D_GLOB.mat')
+mldcont         = MLDm['mld_contac']
 
 dimlon, dimlat, dimdep = lon.shape[0], lat.shape[1], len(iso)
 
@@ -107,6 +109,7 @@ ax0.add_patch(mpatches.Rectangle(xy=[-50, 15], width=20, height=15,facecolor='no
 ax0.add_patch(mpatches.Rectangle(xy=[-55, 50], width=25, height=10,facecolor='none',edgecolor='darkviolet',linewidth=2,transform=ccrs.PlateCarree(),zorder = 10000))
         
 plt.savefig('...\figures\figure1_VF.png',bbox_inches='tight', dpi=300)
+
 
 
 
