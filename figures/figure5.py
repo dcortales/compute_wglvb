@@ -121,10 +121,6 @@ for ii,ax0 in enumerate(axes_r.flat):
     land = cfeature.NaturalEarthFeature('physical', 'land', scale='50m', edgecolor='none', facecolor=cfeature.COLORS['land'], linewidth=.25)
     ax0.add_feature(land, facecolor='k')
 
-# Label -----------------------
-    # props = dict(boxstyle='round', facecolor='none', edgecolor='none', alpha=1)  # bbox features
-    # ax0.text(0, 1.13, label_text[ii], transform=ax0.transAxes, fontsize=26, verticalalignment='top', bbox=props)
-    
 # Grid ------------------------
     gl = ax0.gridlines(draw_labels=True, 
                        xlocs=range(-180, 181, 90), 
@@ -166,4 +162,5 @@ cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$(10^{-6} m$ $s^{-1}$ $/$ $kg$ $m^{-3})$',size=20)
 
 plt.savefig('6_vertical_structure_55_appendix_VF.png', bbox_inches='tight', dpi=300)
+
 
