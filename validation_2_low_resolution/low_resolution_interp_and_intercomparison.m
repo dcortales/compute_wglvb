@@ -52,7 +52,7 @@ mmld = nan([size(lon) length(anno)]);
 ii = 0;
 for an = anno
     ii = ii+1;
-    filemld = strcat('...\OCCITENS\\mld_annual_means\ORCA025.L75_annual_mld_',num2str(an),'.nc'); % Load MLD data
+    filemld = strcat('...\OCCITENS\mld_annual_means\ORCA025.L75_annual_mld_',num2str(an),'.nc'); % Load MLD data
     mmld(:,:,ii) = ncread(filemld,'somxl010');
 end
 mld = max(mmld,[],3); % Maximum of the whole period
@@ -70,7 +70,7 @@ mld_cont_bm(mld_cont_bm>0.5) = 1;
 
 % Save mld mask native grid:
 
-save('...\OCCITENS\oliv3_glob_5_mldmask.mat','mld_cont_bm')
+save('...\OCCITENS\occitens_glob_5_mldmask.mat','mld_cont_bm')
 
 % Low resolution interpolation:
 
@@ -141,7 +141,7 @@ mld_cont_b  = box_interp_nt(lon1,lat1,isopl,mld_cont,lon_box5,lat_box5);
 mld_cont_bm = mld_cont_b;
 mld_cont_bm(mld_cont_bm<0.5) = NaN;
 mld_cont_bm(mld_cont_bm>0.5) = 1;
-save('...\ARMOR3D\\occitens_glob_5_mldmask.mat','mld_cont_bm')
+save('...\OLIV3\oliv3_glob_5_mldmask.mat','mld_cont_bm')
 
 % Low resolution interpolation without Mixed-Layer:
 wb_oliv3_womld = box_interp_woMLD(lon1,lat1,isopl,anno23,w,mld_cont,lon_box5,lat_box5);
@@ -164,7 +164,7 @@ save('...\OMEGA3D\omega3d_glob_5_annual_isolevm.mat','wb_omega3d')
 %%
 % Mixed layer mask
 % Maximum anual max MLD 
-patha = 'E:\\ARMOR3D\\';
+patha = '...\ARMOR3D\';
 mmlda = nan([length(lon) length(lat) length(anno)]);
 ii = 0;
 for an = anno
@@ -207,7 +207,7 @@ for an = anno
     mmmld = nan([size(lon) 12]);
     for m = 1:12
 
-        filemld = sprintf('E:\\ECCO\\MXLDEPTH\\%d\\MXLDEPTH_%d_%02d.nc',an,an,m);
+        filemld = sprintf('...\ECCO\MXLDEPTH\%d\MXLDEPTH_%d_%02d.nc',an,an,m);
         mmmld(:,:,m) = ecco_reshape2d(ncread(filemld,'MXLDEPTH'));
     end
     mmld(:,:,ii) = max(mmmld,[],3);
