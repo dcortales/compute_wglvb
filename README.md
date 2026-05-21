@@ -1,5 +1,5 @@
-# Scrips and function for paper Cortés-Morales et al. 2025
-This repository provides the codes for obtaining the data and figures presented in Cortes-Morales et al. 2025. It is subdivided in four folders:
+# Scrips and function for paper Cortés-Morales et al. 2026
+This repository provides the codes for obtaining the data and figures presented in Cortes-Morales et al. 2026. It is subdivided in four folders:
 1. computation_oliv3
     - `annual_means_ARMOR3D.m`: Annual means of ARMOR3D temperature, salinity, geostrophic meridional velocity and geostrophic zonal velocity
     - `computation_OLIV3_GLOB_annual.m`: Computation beta-plane vertical velocities from ARMOR3D and ERA5 data (OLIV3) and isopycnal interpolation
