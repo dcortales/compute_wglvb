@@ -3,8 +3,8 @@
 
 % Correlation coefficient:
 
-file_tot    = 'E:\OLIV3_figures\OCCITENS\occitens_glob_025_annual_isolevm_filtr.nc';
-file_glvb   = 'E:\OLIV3_figures\OCCITENS\occitens_wglvb_glob_025_annual_isolevm_filtr.nc';
+file_tot    = '...\OCCITENS\occitens_glob_025_annual_isolevm_filtr.nc';
+file_glvb   = '...\OCCITENS\occitens_wglvb_glob_025_annual_isolevm_filtr.nc';
 
 for k = 1:length(isopl)
     disp(['Isopycnal level: ',num2str(k)])
@@ -39,8 +39,8 @@ end
 
 % Save variables .mat:
 
-save('E:\OLIV3_figures\OCCITENS\rho_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','X','Y','isopl','rho')
-save('E:\OLIV3_figures\OCCITENS\relerr_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','X','Y','isopl','rel_err_wglvb_tot')
+save('...\OCCITENS\rho_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','X','Y','isopl','rho')
+save('...\OCCITENS\relerr_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','X','Y','isopl','rel_err_wglvb_tot')
 
 % Vertical gradient:
 
@@ -61,13 +61,13 @@ end
 
 % MLD mask computation:
 
-h_isop      = ncread('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_h_isolevm.nc','h_isolev');
+h_isop      = ncread('...\OCCITENS\\occitens_glob_h_isolevm.nc','h_isolev');
 mmld        = nan([size(X) length(anno)]);
 
 ii = 0;
 for an = anno
     ii              = ii+1;
-    filemld         = strcat('C:\\Users\\yago_\\Documents\\LOCEAN\Data\OCCITENS\\mld_annual_means\\ORCA025.L75_annual_mld_',num2str(an),'.nc');
+    filemld         = strcat('...\OCCITENS\\mld_annual_means\\ORCA025.L75_annual_mld_',num2str(an),'.nc');
     mmld(:,:,ii)    = ncread(filemld,'somxl010');
 end
 
@@ -124,7 +124,7 @@ for i = 1:size(X,1)
     end
 end
 
-save('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\slope_w_55new.mat','m_55_tot','m_55_glvb','X','Y','isopl')
+save('...\intercomparison_metrics\\slope_w_55new.mat','m_55_tot','m_55_glvb','X','Y','isopl')
 
 % Interpolarion to regular 0.25º grid
 
@@ -175,13 +175,13 @@ m_55_glvbcr       = reshape(m_55_glvbc,[size(m_55_glvbc,1)*size(m_55_glvbc,2) 1]
 m_55_glvbcintr    = griddata(latr,lonr,squeeze(m_55_glvbcr),LATimoner,LONimoner);
 m_55_glvb_int     = reshape(m_55_glvbcintr,[size(LATimone,1) size(LATimone,2)]);
 
-save('E:\OLIV3_figures\OCCITENS\rho_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','LONimone','LATimone','isopl','rho_int')
-save('E:\OLIV3_figures\OCCITENS\relerr_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','LONimone','LATimone','isopl','relerr_int')
-save('E:\OLIV3_figures\OCCITENS\vert_grad_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','LONimone','LATimone','m_55_tot_int','m_55_glvb_int')
+save('...\OCCITENS\rho_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','LONimone','LATimone','isopl','rho_int')
+save('...\OCCITENS\relerr_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','LONimone','LATimone','isopl','relerr_int')
+save('...\OCCITENS\vert_grad_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat','LONimone','LATimone','m_55_tot_int','m_55_glvb_int')
 
 %% Correlation coefficient OCCITENS wek vs wtot
 
-file_path   ='C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\ORCA025.L75-OCCITENS.003_y1993m12.1m_gridW.nc';
+file_path   ='...\OCCITENS\ORCA025.L75-OCCITENS.003_y1993m12.1m_gridW.nc';
 X           = ncread(file_path,'nav_lon'); 
 Y           = ncread(file_path,'nav_lat');
 Z           = ncread(file_path,'depthw');
@@ -194,7 +194,7 @@ nfilt       = 5*4/2;
 for an = 1:length(anno)
     disp(['Year: ',num2str(anno(an))])
 
-    filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\wek_annual_%04d.nc',anno(an));
+    filo    = sprintf('...\OCCITENS\\wek_annual_%04d.nc',anno(an));
     w_an    = ncread(filo,'wek');
 
     wekf(:,:,an)    = smooth2a(w_an,nfilt);
@@ -209,8 +209,7 @@ isopl       = isop_uni;
 % ----------------------------------------------------------------------
 
 % Correlation coefficient computation
-%file_tot    = 'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\occitens_wglvb_glob_025_annual_isolevm_filtr.nc';
-file_tot    = 'E:\OLIV3_figures\OCCITENS\occitens_glob_025_annual_isolevm_filtr.nc';
+file_tot    = '...\OCCITENS\occitens_glob_025_annual_isolevm_filtr.nc';
 
 for k = 1:length(isopl)
     disp(['Isopycnal level: ',num2str(k)])
@@ -227,7 +226,6 @@ for k = 1:length(isopl)
         end
     end
 end
-
 
 circshift_lim = 1442-190+1;
 
@@ -268,7 +266,7 @@ save('rho_wek_w_occitens_glob_025_annual_isolevm_filtr.mat','LONimone','LATimone
 
 disp('Isopycnal interpolation:')
 
-file_path   ='E:\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
+file_path   ='...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
 X           = ncread(file_path,'nav_lon'); 
 Y           = ncread(file_path,'nav_lat');
 Z           = ncread(file_path,'depthw');
@@ -292,7 +290,7 @@ for an = 1:length(anno)
     start       = [k,1,1];
     count       = [1,Inf,Inf];
 
-    filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\w_annual_%04d.nc',anno(an));
+    filo    = sprintf('...\OCCITENS\\w_annual_%04d.nc',anno(an));
     w_an    = squeeze(ncread(filo,'w',start,count));
 
     wtot(:,:,an)    = smooth2a(w_an,nfilt);
@@ -301,7 +299,7 @@ end
 for an = 1:length(anno)
     disp(['Year: ',num2str(anno(an))])
 
-    filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\wek_annual_%04d.nc',anno(an));
+    filo    = sprintf('...\OCCITENS\\wek_annual_%04d.nc',anno(an));
     w_an    = ncread(filo,'wek');
 
     wekf(:,:,an)    = smooth2a(w_an,nfilt);
@@ -350,7 +348,7 @@ save('rho_wek_w_occitens_glob_025_annual_horlev_filtr.mat','LONimone','LATimone'
 
 disp('Isopycnal interpolation:')
 
-file_path   ='E:\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
+file_path   ='...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
 X           = ncread(file_path,'nav_lon'); 
 Y           = ncread(file_path,'nav_lat');
 Z           = ncread(file_path,'depthw');
@@ -376,7 +374,7 @@ for an = 1:length(anno)
     start       = [k,1,1];
     count       = [1,Inf,Inf];
 
-    filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\wglvb_annual_%04d.nc',anno(an));
+    filo    = sprintf('...\OCCITENS\\wglvb_annual_%04d.nc',anno(an));
     w_an    = squeeze(ncread(filo,'div',start,count));
 
     wtot(:,:,an)    = smooth2a(w_an,nfilt);
@@ -385,7 +383,7 @@ end
 for an = 1:length(anno)
     disp(['Year: ',num2str(anno(an))])
 
-    filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\wek_annual_%04d.nc',anno(an));
+    filo    = sprintf('...\OCCITENS\\wek_annual_%04d.nc',anno(an));
     w_an    = ncread(filo,'wek');
 
     wekf(:,:,an)    = smooth2a(w_an,nfilt);
