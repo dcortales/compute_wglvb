@@ -46,26 +46,9 @@ rho_d = file['rho_int'][:, :]
 fig, axs = plt.subplots(2, 2, figsize=(22, 12), subplot_kw={"projection": proj})
 axs = axs.ravel()
 
-datasets = [
-    rho_a[:, :, k_a],
-    diff_b,
-    rho_c,
-    rho_d
-]
-
-highlight_levels_all = [
-    [0.7, 0.9],
-    [0],
-    [0.7, 0.9],
-    [0.7, 0.9]
-]
-
-linestyles_all = [
-    ['--', '-'],
-    ['-'],
-    ['--', '-'],
-    ['--', '-']
-]
+datasets              = [rho_a[:, :, k_a], diff_b, rho_c, rho_d]
+highlight_levels_all  = [[0.7, 0.9], [0], [0.7, 0.9], [0.7, 0.9]]
+linestyles_all        = [['--', '-'], ['-'], ['--', '-'], ['--', '-']]
 
 for i, ax in enumerate(axs):
     pcm = ax.contourf(lon, lat, datasets[i], levels=bounds, cmap=BrBGcentre, norm=norm,
@@ -98,4 +81,4 @@ cbar.set_label('Correlation coefficient', size=22)
 
 plt.subplots_adjust(wspace=0.1, hspace=0.2)
 
-#plt.savefig('figure9_VF.png',bbox_inches='tight', dpi=300)
+plt.savefig('figure9_VF.png',bbox_inches='tight', dpi=300)
