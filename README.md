@@ -26,8 +26,6 @@ All the data used in this repository can be accessed via the links provided in C
 ## Installation and Usage
 The neutral density fields for OCCITENS, ARMOR3D and ECCOv4r4, and the geostrophic meridional velocities for OCCITENS has been computed using the repository https://github.com/meom-group/CDFTOOLS.
 
-
 ## Requirements
 - Matlab
 - Python
-- Fortran
