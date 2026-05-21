@@ -4,7 +4,7 @@ clear all; close all; clc
 disp('----------------------------ECCO----------------------------------')
 anno        = 1992:2015; month = 1:12;
 
-pathECCO    = 'E:\\ECCO\\';
+pathECCO    = '...\\ECCO\\';
 pathTT      = string(sprintf('THETA\\%4d\\THETA_%4d_%02d.nc',anno(1),anno(1),month(1)));
 TT          = strcat(pathECCO,pathTT);
 depthe      = ncread(TT,'Z'); LONe = ncread(TT,'XC'); LATe = ncread(TT,'YC');
@@ -17,7 +17,7 @@ for an = 1:length(anno)
     w_m = nan(90,90,13,50,12);
     for m = 1:length(month)
         fprintf('%d/%02d\n',anno(an),m)
-        file_WVELMASS       = string(sprintf('E:\\ECCO\\WVELMASS\\%4d\\WVELMASS_%4d_%02d.nc',anno(an),anno(an),m));
+        file_WVELMASS       = string(sprintf('...\\ECCO\\WVELMASS\\%4d\\WVELMASS_%4d_%02d.nc',anno(an),anno(an),m));
         w_m(:,:,:,:,m)      = squeeze(ncread(file_WVELMASS,'WVELMASS'));
 
     end
@@ -29,7 +29,7 @@ end
 we_glo(we_glo == 0) = NaN;
 
 %% Create .nc file ----------------------------------------------------
-file_out = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_1_annual_verlev.nc';
+file_out = '...\\ECCO\\ecco_glob_1_annual_verlev.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',size(lone,1),'y',size(late,2)},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -84,7 +84,7 @@ ncwriteatt(file_out,'w_ecco',  'units','m/s')
 
 anno        = 2016:2017; month = 1:12;
 
-pathECCO    = 'E:\\ECCO\\';
+pathECCO    = '...\\ECCO\\';
 pathTT      = string(sprintf('THETA\\%4d\\THETA_%4d_%02d.nc',anno(1),anno(1),month(1)));
 TT          = strcat(pathECCO,pathTT);
 depthe      = ncread(TT,'Z'); LONe = ncread(TT,'XC'); LATe = ncread(TT,'YC');
@@ -98,9 +98,9 @@ for an = 1:length(anno)
     s_m = nan(90,90,13,50,12);
     for m = 1:length(month)
         fprintf('%d/%02d\n',anno(an),m)
-        file_T          = string(sprintf('E:\\ECCO\\THETA\\%4d\\THETA_%4d_%02d.nc',anno(an),anno(an),m));
+        file_T          = string(sprintf('...\\ECCO\\THETA\\%4d\\THETA_%4d_%02d.nc',anno(an),anno(an),m));
         t_m  = squeeze(ncread(file_T,'THETA'));
-        file_S          = string(sprintf('E:\\ECCO\\SALT\\%4d\\SALT_%4d_%02d.nc',anno(an),anno(an),m));
+        file_S          = string(sprintf('...\\ECCO\\SALT\\%4d\\SALT_%4d_%02d.nc',anno(an),anno(an),m));
         s_m  = squeeze(ncread(file_S,'SALT'));
 
     %tme     = squeeze(mean(t_m,5)); 
@@ -108,13 +108,11 @@ for an = 1:length(anno)
     te_glo(:,:,:)  = ecco_reshape3d(t_m);
     se_glo(:,:,:)  = ecco_reshape3d(s_m);
 
-
-
 te_glo(te_glo == 0) = NaN;
 se_glo(se_glo == 0) = NaN;
 
 % Create .nc file ----------------------------------------------------
-file_out = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\TS\\%4d\\TS_%4d_%02d.nc',anno(an),anno(an),m);
+file_out = sprintf('...\\ECCO\\TS\\%4d\\TS_%4d_%02d.nc',anno(an),anno(an),m);
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',size(lone,1),'y',size(late,2)},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -188,11 +186,11 @@ for an = 1:length(anno)
 
     % ECCO w loading:
 
-    filo    = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_1_annual_verlev.nc';
+    filo    = ...\\ECCO\\ecco_glob_1_annual_verlev.nc';
     w_an    = ncread(filo,'w_ecco',start,count);
 
     % Neutral density loading:
-    filesn  = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\neutral_density\\SIGNTR_GLOB_%04d.nc',anno(an));
+    filesn  = sprintf('...\\ECCO\\neutral_density\\SIGNTR_GLOB_%04d.nc',anno(an));
     sigma   = ncread(filesn,'signtr');
     
     dimlon = size(w_an,1); dimlat = size(w_an,2); dimdep = size(w_an,3);
@@ -201,7 +199,7 @@ for an = 1:length(anno)
 end
 
 % Create .nc file ----------------------------------------------------
-file_out = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_1_annual_isolevy.nc';
+file_out = '...\\ECCO\\ecco_glob_1_annual_isolevy.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',size(lone,1),'y',size(late,2)},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -258,7 +256,6 @@ ncwriteatt(file_out,'w_ecco_isolev',  'units','m/s')
 ncwriteatt(file_out,'h_isolev',  'axis',         'X,Y,X,T')
 ncwriteatt(file_out,'h_isolev',  'long_name',    'depth isopycnal surfaces')
 ncwriteatt(file_out,'h_isolev',  'units','m')
-
 
 %% Isopycnal interpolation
 
@@ -271,10 +268,9 @@ isop_uni = [isopl1 isop(5:end)];
 isopl = isop_uni;
 
 % Variables over isopycnals
-%signtr = mean(signtr_an,4);
-%sigma = signtr;
+
 % Neutral density loading:
-filesn  = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\neutral_density\\SIGNTR_GLOB_27yr.nc';
+filesn  = '...\\ECCO\\neutral_density\\SIGNTR_GLOB_27yr.nc';
 sigma   = ncread(filesn,'signtr');
 
 for an = 1%:length(anno)
@@ -285,7 +281,7 @@ for an = 1%:length(anno)
 
     % ECCO w loading:
 
-    filo    = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_1_annual_verlev.nc';
+    filo    = '...\\ECCO\\ecco_glob_1_annual_verlev.nc';
     w_an    = ncread(filo,'w_ecco',start,count);
 
     dimlon  = size(w_an,1); dimlat = size(w_an,2); dimdep = size(w_an,3);
@@ -294,7 +290,7 @@ for an = 1%:length(anno)
 end
 
 % Create .nc file ----------------------------------------------------
-file_out = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_1_annual_isolevm.nc';
+file_out = '...\\ECCO\\ecco_glob_1_annual_isolevm.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',size(lone,1),'y',size(late,2)},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -351,11 +347,3 @@ ncwriteatt(file_out,'w_ecco_isolev',  'units','m/s')
 ncwriteatt(file_out,'h_isolev',  'axis',         'X,Y,X,T')
 ncwriteatt(file_out,'h_isolev',  'long_name',    'depth isopycnal surfaces')
 ncwriteatt(file_out,'h_isolev',  'units','m')
-
-%%
-ww = ncread('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\ECCO\\ecco_glob_1_annual_isolevm.nc','w_ecco_isolev');
-%%
-figure
-contourf(squeeze(sigma(:,:,2)))
-%%
-depthe = ncread(filo,'depth');
