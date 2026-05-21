@@ -22,6 +22,10 @@ lat         = file_rho['LATimone']
 isopl       = file_rho['isopl']
 rho         = file_rho['rho_int']
 
+file_b        = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/vert_grad_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat')
+wtot_int      = file_b['m_55_tot_int']
+wlvb_int      = file_b['m_55_glvb_int']
+
 file_relerr = sio.loadmat('.../OCCITENS/relerr_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat')
 relerr      = file_relerr['relerr_int']
 
@@ -165,12 +169,6 @@ for spine in ax1.spines.values():
     spine.set_linewidth(2)
 
 # Panel c: Vertical gradient proxi
-
-file_b        = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/vert_grad_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat')
-lon           = file_b['LONimone']
-lat           = file_b['LATimone']
-wtot_int      = file_b['m_55_tot_int']
-wlvb_int      = file_b['m_55_glvb_int']
 
 mask_pos_grd  = np.full(wtot_int.shape, np.nan)
 mask_pos_grd[wtot_int>0] = 1
