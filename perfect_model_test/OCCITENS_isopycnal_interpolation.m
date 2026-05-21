@@ -7,7 +7,7 @@
 disp('Isopycnal interpolation:')
 anno        = 1993:2015;
 
-file_path   ='E:\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
+file_path   ='...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
 X           = ncread(file_path,'nav_lon'); 
 Y           = ncread(file_path,'nav_lat');
 Z           = ncread(file_path,'depthw');
@@ -24,18 +24,18 @@ isopl       = isop_uni;
 for an = 1:length(anno)
     disp(['Year: ',num2str(anno(an))])
 
-    filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\w_annual_%04d.nc',anno(an));
+    filo    = sprintf('...\OCCITENS\\w_annual_%04d.nc',anno(an));
     w_an    = permute(ncread(filo,'w'),[3 2 1]);
 
     % Neutral density loading:
-    filesn  = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\neutral_density\\ORCA025.L75-OCCITENS.003-signtr_%04d.nc',anno(an));
+    filesn  = sprintf('...\OCCITENS\\neutral_density\\ORCA025.L75-OCCITENS.003-signtr_%04d.nc',anno(an)); % Computed from https://github.com/meom-group/CDFTOOLS
     sigma   = ncread(filesn,'signtr');
 
     [w_isop(:,:,:,an), h_isop(:,:,:,an)] = isop_interp(w_an,dimlon,dimlat,dimdep,isopl,Z,sigma);
 end
 
 % Create .nc file ----------------------------------------------------
-file_out = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_025_annual_isolevy.nc';
+file_out = '...\OCCITENS\occitens_glob_025_annual_isolevy.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',dimlon,'y',dimlat},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -107,7 +107,7 @@ isop_uni    = [isopl1 isop(5:end)];
 isopl       = isop_uni;
 % ----------------------------------------------------------------------
 
-file_path   ='E:\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
+file_path   ='...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
 X           = ncread(file_path,'nav_lon'); 
 Y           = ncread(file_path,'nav_lat');
 Z           = ncread(file_path,'depthw');
@@ -115,24 +115,24 @@ dimlon      = size(X,1); dimlat = size(Y,2); dimdep = length(Z);
 
 % w occitens
 
-filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\w_annual_%04d.nc',anno(1));
+filo    = sprintf('...\OCCITENS\\w_annual_%04d.nc',anno(1));
 w_an    = ncread(filo,'w');
 
 % Neutral density loading:
-filesn  = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\neutral_density\\ORCA025.L75-OCCITENS.003-signtr_27yr.nc';
+filesn  = '...\OCCITENS\\neutral_density\\ORCA025.L75-OCCITENS.003-signtr_27yr.nc';
 sigma   = ncread(filesn,'signtr');
 
 for an = 1:length(anno)
     disp(['Year: ',num2str(anno(an))])
 
-    filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\w_annual_%04d.nc',anno(an));
+    filo    = sprintf(...\OCCITENS\\w_annual_%04d.nc',anno(an));
     w_an    = permute(ncread(filo,'w'),[3 2 1]);
 
     [w_isop(:,:,:,an), h_isop] = isop_interp(w_an,dimlon,dimlat,dimdep,isopl,Z,sigma);
 end
 
 % Create .nc file ----------------------------------------------------
-file_out = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_025_annual_isolevm.nc';
+file_out = '...\OCCITENS\\occitens_glob_025_annual_isolevm.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',dimlon,'y',dimlat},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -192,7 +192,7 @@ ncwriteatt(file_out,'h_isolev',  'long_name',    'depth isopycnal surfaces')
 ncwriteatt(file_out,'h_isolev',  'units','m')
 
 %% Create .nc file ----------------------------------------------------
-file_out = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_h_isolevm.nc';
+file_out = '...\OCCITENS\\occitens_glob_h_isolevm.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',dimlon,'y',dimlat},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -244,7 +244,7 @@ ncwriteatt(file_out,'h_isolev',  'units','m')
 disp('Isopycnal interpolation:')
 anno        = 1993:2015;
 
-file_path   ='E:\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
+file_path   ='...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
 X           = ncread(file_path,'nav_lon'); 
 Y           = ncread(file_path,'nav_lat');
 Z           = ncread(file_path,'depthw');
@@ -261,18 +261,18 @@ isopl       = isop_uni;
 for an = 1:length(anno)
     disp(['Year: ',num2str(anno(an))])
 
-    filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\wglvb_annual_%04d.nc',anno(an));
+    filo    = sprintf('...\OCCITENS\\wglvb_annual_%04d.nc',anno(an));
     w_an    = permute(ncread(filo,'div'),[3 2 1]);
 
     % Neutral density loading:
-    filesn  = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\neutral_density\\ORCA025.L75-OCCITENS.003-signtr_%04d.nc',anno(an));
+    filesn  = sprintf('...\OCCITENS\\neutral_density\\ORCA025.L75-OCCITENS.003-signtr_%04d.nc',anno(an));
     sigma   = ncread(filesn,'signtr');
 
     [w_isop(:,:,:,an), h_isop(:,:,:,an)] = isop_interp(w_an,dimlon,dimlat,dimdep,isopl,Z,sigma);
 end
 
 % Create .nc file ----------------------------------------------------
-file_out = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_wglvb_glob_025_annual_isolevy.nc';
+file_out = '...\OCCITENS\\occitens_wglvb_glob_025_annual_isolevy.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',dimlon,'y',dimlat},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -344,7 +344,7 @@ isop_uni    = [isopl1 isop(5:end)];
 isopl       = isop_uni;
 % ----------------------------------------------------------------------
 
-file_path   ='E:\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
+file_path   ='...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridW.nc';
 X           = ncread(file_path,'nav_lon'); 
 Y           = ncread(file_path,'nav_lat');
 Z           = ncread(file_path,'depthw');
@@ -352,24 +352,24 @@ dimlon      = size(X,1); dimlat = size(Y,2); dimdep = length(Z);
 
 % w occitens
 
-filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\wglvb_annual_%04d.nc',anno(1));
+filo    = sprintf('...\OCCITENS\\wglvb_annual_%04d.nc',anno(1));
 w_an    = permute(ncread(filo,'div'),[3 2 1]);
 
 % Neutral density loading:
-filesn  = 'C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\neutral_density\\ORCA025.L75-OCCITENS.003-signtr_27yr.nc';
+filesn  = '...\OCCITENS\\neutral_density\\ORCA025.L75-OCCITENS.003-signtr_27yr.nc';
 sigma   = ncread(filesn,'signtr');
 
 for an = 1:length(anno)
     disp(['Year: ',num2str(anno(an))])
 
-    filo    = sprintf('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\wglvb_annual_%04d.nc',anno(an));
+    filo    = sprintf('...\OCCITENS\\wglvb_annual_%04d.nc',anno(an));
     w_an    = permute(ncread(filo,'div'),[3 2 1]);
 
     [w_isop(:,:,:,an), h_isop] = isop_interp(w_an,dimlon,dimlat,dimdep,isopl,Z,sigma);
 end
 
 %% Create .nc file ----------------------------------------------------
-file_out = 'E:\OLIV3_figures\OCCITENS\occitens_wglvb_glob_025_annual_isolevm.nc';
+file_out = '...\OCCITENS\occitens_wglvb_glob_025_annual_isolevm.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',dimlon,'y',dimlat},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -440,7 +440,7 @@ for an = 1:length(anno)
 
     % OLIV3 loading:
 
-    filo    = 'E:\OLIV3_figures\OCCITENS\occitens_wglvb_glob_025_annual_isolevm.nc';
+    filo    = '...\OCCITENS\occitens_wglvb_glob_025_annual_isolevm.nc';
     w_an    = ncread(filo,'wglvb_occitens_isolev',start,count);
     
     dimlon = size(w_an,1); dimlat = size(w_an,2); dimdep = size(w_an,3);
@@ -451,7 +451,7 @@ for an = 1:length(anno)
     end
 end
 %% Create .nc file ----------------------------------------------------
-file_out = 'E:\OLIV3_figures\OCCITENS\occitens_wglvb_glob_025_annual_isolevm_filtr.nc';
+file_out = '...\OCCITENS\occitens_wglvb_glob_025_annual_isolevm_filtr.nc';
 nccreate(file_out,'longitude',...
          'Dimensions', {'x',dimlon,'y',dimlat},'Format','netcdf4','Datatype','single')
 nccreate(file_out,'latitude',...
@@ -512,7 +512,7 @@ for an = 1:length(anno)
 
     % OLIV3 loading:
 
-    filo    = 'E:\OLIV3_figures\OCCITENS\occitens_glob_025_annual_isolevm.nc';
+    filo    = '...\OCCITENS\occitens_glob_025_annual_isolevm.nc';
     w_an    = ncread(filo,'w_occitens_isolev',start,count);
     
     dimlon = size(w_an,1); dimlat = size(w_an,2); dimdep = size(w_an,3);
@@ -522,6 +522,6 @@ for an = 1:length(anno)
         wft(:,:,k,an)    = smooth2a(wk,nfilt);
     end
 end
-% save('E:\\OLIV3_figures\running\wtot_filtered.mat',wft)
-file_out = 'E:\OLIV3_figures\OCCITENS\occitens_glob_025_annual_isolevm_filtr.nc';
+
+file_out = '...\OCCITENS\occitens_glob_025_annual_isolevm_filtr.nc';
 create_ncfile(file_out, X, Y, isopl, anno, wft, 'w_occitens_isolev_filtr', 'occitens vertical velocities 5 deg filtered');
