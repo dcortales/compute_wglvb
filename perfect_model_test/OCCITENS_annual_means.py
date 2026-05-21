@@ -18,19 +18,18 @@ Compute Ekman pumping and w in the ocean interior:
 '''
 
 # %% Load data
-
 # GRID:
-pathu           = r'E:\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridU.nc' 
-pathv           = r'E:\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridV.nc' 
+pathu           = r'...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridU.nc' 
+pathv           = r'...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridV.nc' 
 fileu, filev    = xr.open_dataset(pathu),xr.open_dataset(pathv)
 ulon,ulat       = fileu.variables['nav_lon'].values.T, fileu.variables['nav_lat'].values.T
 vlon,vlat       = filev.variables['nav_lon'].values.T, filev.variables['nav_lat'].values.T
 
-patht           = r'E:\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridT.nc' 
+patht           = r'...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\1993\ORCA025.L75-OCCITENS.003_y1993m01.1m_gridT.nc' 
 filet           = xr.open_dataset(patht)
 deptht          = filet.variables['deptht'].values
 
-pathgrid        = r'E:\ORCA025.L75-OCCITENS.003\GRID\ORCA025.L75-OCCITENS_mesh_mask.nc' 
+pathgrid        = r'...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\ORCA025.L75-OCCITENS_mesh_mask.nc' 
 filegrid        = xr.open_dataset(pathgrid)
 e1t,e2t,e3t     = filegrid.variables['e1t'].values.T,filegrid.variables['e2t'].values.T,filegrid.variables['e3t'].values.T
 e1f,e2f         = filegrid.variables['e1f'].values.T,filegrid.variables['e2f'].values.T
@@ -66,7 +65,7 @@ for aa in anno:
     vg = np.zeros((1442,1021,75,12)) # Annual matrix
     for mm in np.arange(1,13):
         print("Month: " + str(mm))
-        pathvgo     = r'E:\ORCA025.L75-OCCITENS.003\GRID\geo\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridVgeo.nc'%(aa,aa,mm)
+        pathvgo     = r'...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\geo\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridVgeo.nc'%(aa,aa,mm)
         filevg      = xr.open_dataset(pathvgo)
         
         vgm         = filevg.variables['vomecrty'].values.T
@@ -76,7 +75,7 @@ for aa in anno:
     # Save .nc file:
     print('Save annual variables:')
 
-    path_out = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\vgeo_annual_%s.nc'%(aa)
+    path_out = r'...\OCCITENS\vgeo_annual_%s.nc'%(aa)
     ncfile = datas(path_out,mode='w',format='NETCDF4_CLASSIC')
     print(path_out)
 
@@ -119,7 +118,7 @@ for aa in anno:
     for mm in np.arange(1,13):
         print("Month: " + str(mm))
         # Velocities:
-        pathwo      = r'E:\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridW.nc'%(aa,aa,mm)
+        pathwo      = r'...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridW.nc'%(aa,aa,mm)
         
         filew = xr.open_dataset(pathwo)
         wm         = filevg.variables['vovecrtz'].values.T
@@ -129,7 +128,7 @@ for aa in anno:
     # Save .nc files:
     print('Save annual variables:')
     
-    path_out = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\w_annual_%s.nc'%(aa)
+    path_out = r'...\OCCITENS\w_annual_%s.nc'%(aa)
     ncfile = datas(path_out,mode='w',format='NETCDF4_CLASSIC')
     print(path_out)
     
@@ -170,8 +169,8 @@ for aa in anno:
     for mm in np.arange(1,13):
         print("Month: " + str(mm))
         # Velocities:
-        pathuo      = r'E:\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridU.nc'%(aa,aa,mm)
-        pathvo      = r'E:\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridV.nc'%(aa,aa,mm)
+        pathuo      = r'...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridU.nc'%(aa,aa,mm)
+        pathvo      = r'...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridV.nc'%(aa,aa,mm)
   
         fileu       = xr.open_dataset(pathuo)
         filev       = xr.open_dataset(pathvo)
@@ -230,14 +229,14 @@ for aa in anno:
         print("Month: " + str(mm))
         
         # Geostrophic velocities:
-        pathvgo     = r'E:\ORCA025.L75-OCCITENS.003\GRID\geo\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridVgeo.nc'%(aa,aa,mm)
+        pathvgo     = r'...\OCCITENS\ORCA025.L75-OCCITENS.003\GRID\geo\%s\ORCA025.L75-OCCITENS.003_y%sm%02d.1m_gridVgeo.nc'%(aa,aa,mm)
         filevg = xr.open_dataset(pathvgo)
         vgm     = np.squeeze(filevg.variables['vomecrty'].values.T)    
         vg += vgm
     Vg = vg/12
     
     # Ekman pumping:
-    pathek      = r'C:\Users\yago_\Documents\LOCEAN\Data\OCCITENS\wek_annual_%d.nc'%(aa)
+    pathek      = r'...\OCCITENS\wek_annual_%d.nc'%(aa)
     fileek      = xr.open_dataset(pathek)
     wekm        = fileek.variables['wek'].values
     
