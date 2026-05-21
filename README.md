@@ -11,6 +11,8 @@ This repository provides the codes for obtaining the data and figures presented 
     - `perfect_model_test_metrics.m`: Metrics for the perfect model test (Correlation coefficient, relative error and vertical gradient)
     - `smooth2a.m`: smoothing function
 3. validation_1_annual_means
+    - `annual_means_ECCO.m`, `annual_means_GLORYS.m` and `annual_means_OMEGA3D.m`: functions to compute annual averages of vertical velocities from ECCO, GLORYS and OMEGA3D datasets
+    - `ecco_reshape2d.m` and `ecco_reshape3d.m`: functions to reshape ECCO grid into global grid
 4. validation_2_low_resolution
 5. figures
 
