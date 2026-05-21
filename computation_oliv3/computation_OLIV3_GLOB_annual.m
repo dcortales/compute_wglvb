@@ -33,10 +33,6 @@ tauym       = squeeze(mean(tauy_ERAr,3));
 
 clear taux_ERAr tauy_ERAr taux_ERA tauy_ERA
 
-%lonc            = lon;                                                      % Circshift
-%lonc(lon> 180)  = lon-360;
-%lonc            = circshift(lonc,719);
-
 [latm,lonm]     = meshgrid(lat,lon);
 fe              = fcO.*(sin(latm*pi/180)); 
 
