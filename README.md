@@ -15,7 +15,7 @@ This repository provides the codes for obtaining the data and figures presented 
 5. figures
 
 ## Data
-All the data used in this repository can be accessed via the links provided in Cortés-Morales et al. 2025:
+All the data used in this repository can be accessed via the links provided in Cortés-Morales et al. 2026:
 - OCCITENS
 - ARMOR3D
 - ERA5
