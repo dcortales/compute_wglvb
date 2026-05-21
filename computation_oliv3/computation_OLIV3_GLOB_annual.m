@@ -7,7 +7,6 @@ P           = '...\ARMOR3D\1993\dataset-armor-3d-rep-weekly_19930106T1200Z_P2020
 LON         = ncread(P,'longitude');
 LAT         = ncread(P,'latitude');
 PROF        = ncread(P,'depth');
-%LONc        = circshift(LON,length(LON)/2,1);
 [LATm,LONm] = meshgrid(double(LAT),double(LON));
 dif_zt      = single(abs(PROF(1:end-1)-PROF(2:end)));                       % vertical scale factor
 
