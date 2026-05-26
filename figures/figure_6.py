@@ -1,3 +1,5 @@
+# FIGURE 6: Intercomparison vertical gradient
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -6,15 +8,13 @@ from matplotlib import cm
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
-
 # GRID:
-meanm   = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\mean_w_womld.mat')
+meanm   = sio.loadmat('...\intercomparison_metrics\\mean_w_womld.mat')
 lonbox5 = meanm['lon_box5m']
 latbox5 = meanm['lat_box5m']
     
-# Mean:
-slp     = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\slope_w_55new.mat')['m_55']
-slp     = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/intercomparison_metrics\slope_w_55.mat')['m_55']
+# Vertical gradient:
+slp     = sio.loadmat('...\intercomparison_metrics\slope_w_55.mat')['m_55']
 
 # %% Figure
 
@@ -88,4 +88,4 @@ cbar = plt.colorbar(
 cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$10^{-4}$ $m$ $day^{-1}$ $m^{-1}$',size=20)
 
-#plt.savefig('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\review\\6_vertical_structure_55_VF_diff_corr.png', bbox_inches='tight', dpi=300)
+plt.savefig('...\figures\figure6.png', bbox_inches='tight', dpi=300)
