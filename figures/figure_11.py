@@ -1,4 +1,4 @@
-# Correlation coefficient Ekman pumping, w_tot and w_g
+#FIGURE 11: Correlation coefficient Ekman pumping, w_tot and w_g
 
 import scipy.io as sio
 import numpy as np
@@ -21,24 +21,24 @@ titles = [
 
 # %% Load data
 # (a)
-file = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/rho_wek_w_occitens_glob_025_annual_isolevm_filtr.mat')
+file = sio.loadmat('.../rho_wek_w_occitens_glob_025_annual_isolevm_filtr.mat')
 lon, lat, rho_a, isopl = file['LONimone'], file['LATimone'], file['rho_int'], file['isopl']
 k_a = 20
 
 # (b)
-file1 = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/rho_wek_w_occitens_glob_025_annual_isolevm_filtr.mat')
-file2 = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/rho_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat')
+file1 = sio.loadmat('.../rho_wek_w_occitens_glob_025_annual_isolevm_filtr.mat')
+file2 = sio.loadmat('.../rho_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat')
 rho_b1, rho_b2 = file1['rho_int'], file2['rho_int']
 lon, lat = file1['LONimone'], file1['LATimone']
 k_b = 20
 diff_b = np.clip(rho_b1[:, :,k_b] - rho_b2[:, :,k_b], -1, 1)
 
 # (c)
-file = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/rho_wglvb_w_occitens_glob_025_annual_horlev_filtr.mat')
+file = sio.loadmat('.../rho_wglvb_w_occitens_glob_025_annual_horlev_filtr.mat')
 rho_c = file['rho_int'][:, :]
 
 # (d)
-file = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/rho_wek_w_occitens_glob_025_annual_horlev_filtr.mat')
+file = sio.loadmat('.../rho_wek_w_occitens_glob_025_annual_horlev_filtr.mat')
 rho_d = file['rho_int'][:, :]
 
 # %% Figure
@@ -98,4 +98,4 @@ cbar.set_label('Correlation coefficient', size=22)
 
 plt.subplots_adjust(wspace=0.1, hspace=0.2)
 
-#plt.savefig('figure9_VF.png',bbox_inches='tight', dpi=300)
+plt.savefig('...\figures\figure11.png',bbox_inches='tight', dpi=300)
