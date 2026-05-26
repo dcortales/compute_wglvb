@@ -1,3 +1,5 @@
+# FIGURES 7 and 8: Intercomparison variance
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -8,26 +10,23 @@ import cartopy.feature as cfeature
 import matplotlib.colors as colors
 
 # GRID:
-meanm   = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\mean_w.mat')
+meanm   = sio.loadmat('...\intercomparison_metrics\mean_w.mat')
 lonbox5 = meanm['lon_box5m']
 latbox5 = meanm['lat_box5m']
     
 # Variance:
-wv      = np.squeeze(sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\variance_w.mat')['wv'])
-
-wv      = np.squeeze(sio.loadmat('C:/Users/yago_/Documents/LOCEAN/intercomparison_metrics/variance_w_nolog.mat')['wv'])
+wv      = np.squeeze(sio.loadmat('.../intercomparison_metrics/variance_w_nolog.mat')['wv'])
 # MLD mask 
-mldmask_occ = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_mldmask.mat')['mld_cont_bm']
-mldmask_oli = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\oliv3_glob_5_mldmask.mat')['mld_cont_bm']
-mldmask_ecc = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\ecco_glob_5_mldmask.mat')['mld_cont_bm'] 
+mldmask_occ = sio.loadmat('...\Data\\OGCM\\occitens_glob_5_mldmask.mat')['mld_cont_bm']
+mldmask_oli = sio.loadmat('...\Data\\OGCM\\oliv3_glob_5_mldmask.mat')['mld_cont_bm']
+mldmask_ecc = sio.loadmat('...\Data\\OGCM\\ecco_glob_5_mldmask.mat')['mld_cont_bm'] 
 
-lvbmask_occ = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_lvbmask.mat')['lvb_bm']
+lvbmask_occ = sio.loadmat('...\Data\\OGCM\\occitens_glob_5_lvbmask.mat')['lvb_bm']
 
-rho    = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\R_sign_RMSE_w.mat')['rho']
+rho    = sio.loadmat('...\intercomparison_metrics\\R_sign_RMSE_w.mat')['rho']
 
 k = 20
 # %% Functions
-
 def truncate_cmap(cmap, minval=0.05, maxval=0.95, n=256):
     """Return a truncated copy of a colormap."""
     new_colors = cmap(
@@ -125,11 +124,9 @@ cbar = plt.colorbar(
 cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$m^2$ $day^{-2}$',size=20)
 
-#plt.savefig('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\review\\6_variance_w_55_VF.png', bbox_inches='tight', dpi=300)
-
+plt.savefig('...\figures\figure7.png', bbox_inches='tight', dpi=300)
 
 # %% Figure 8
-
 # Colormap
 cmap3           = cm.get_cmap('PuOr_r')
 bounds_var      = np.arange(-0.01,0.011,0.001)
@@ -185,7 +182,6 @@ for ii,ax0 in enumerate(axes_r.flat):
     ax0.tick_params(axis="both", width=2, length=6, labelsize=12)
 
 # Colorbar:
-
 cbar = plt.colorbar(
         mpl.cm.ScalarMappable(cmap=cmap3,norm = norm2),
     extend='both',
@@ -200,4 +196,4 @@ cbar = plt.colorbar(
 cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$m^2$ $day^{-2}$',size=20)
 
-#plt.savefig('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\review\\6_variance_w_55_VF_diff.png', bbox_inches='tight', dpi=300)
+plt.savefig('...figures\figure8.png', bbox_inches='tight', dpi=300)
