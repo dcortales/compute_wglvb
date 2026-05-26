@@ -1,3 +1,5 @@
+# FIGURES 9 and 10: Correlation coefficient
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -7,20 +9,20 @@ import cartopy.feature as cfeature
 from matplotlib.colors import ListedColormap
 
 # Load variables:
-meanm   = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\mean_w.mat')
+meanm   = sio.loadmat('...\intercomparison_metrics\\mean_w.mat')
 
 # Grid
 lonbox5 = meanm['lon_box5m']
 latbox5 = meanm['lat_box5m']
     
 # rho and matsig
-rho     = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\R_sign_RMSE_w.mat')['rho']
-sig     = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\R_sign_RMSE_w.mat')['matsigcorr']
+rho     = sio.loadmat('...\intercomparison_metrics\\R_sign_RMSE_w.mat')['rho']
+sig     = sio.loadmat('...\intercomparison_metrics\\R_sign_RMSE_w.mat')['matsigcorr']
 
 # MLD mask 
-mldmask_occ = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_mldmask.mat')['mld_cont_bm']
-mldmask_oli = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\oliv3_glob_5_mldmask.mat')['mld_cont_bm']
-mldmask_ecc = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\ecco_glob_5_mldmask.mat')['mld_cont_bm'] 
+mldmask_occ = sio.loadmat('...\Data\\OGCM\\occitens_glob_5_mldmask.mat')['mld_cont_bm']
+mldmask_oli = sio.loadmat('...\Data\\OGCM\\oliv3_glob_5_mldmask.mat')['mld_cont_bm']
+mldmask_ecc = sio.loadmat('...\Data\\OGCM\\ecco_glob_5_mldmask.mat')['mld_cont_bm'] 
 
 # %% Figure 9
 
@@ -113,7 +115,7 @@ cbar = plt.colorbar(
 
 cbar.ax.tick_params(labelsize=20)
 cbar.set_label('Correlation coefficient', fontsize=22)
-#plt.savefig('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\figuresVF\\figure7_VF.png', bbox_inches='tight', dpi=300)
+plt.savefig('...\figures\\figure9.png', bbox_inches='tight', dpi=300)
 
 # %% Figure 10
 
@@ -196,3 +198,5 @@ fig.legend(handles=legend_handles,
 
 plt.suptitle('Median correlation coefficient across various depths', fontsize=18, y=0.98)
 plt.tight_layout()
+
+plt.savefig('...\figures\\figure10.png', bbox_inches='tight', dpi=300)
