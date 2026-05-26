@@ -141,4 +141,4 @@ cbar = plt.colorbar(
 cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$m$ $day^{-1}$',size=20)
 
-plt.savefig('...\figures\figure0_VF.png',bbox_inches='tight', dpi=300)
+plt.savefig('...\figures\figure1.png',bbox_inches='tight', dpi=300)
