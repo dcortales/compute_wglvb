@@ -1,3 +1,4 @@
+# FIGURE 1: Time-mean OLIV3 sigma 26 and Ekman pumping
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib as mpl
@@ -11,17 +12,17 @@ import xarray as xr
 # %% Load variables
 
 # MLD
-MLDm            = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\MLD_ARMOR3D_GLOB.mat')
+MLDm            = sio.loadmat('...\MLD_ARMOR3D_GLOB.mat')
 mldcont         = MLDm['mld_contac']
 
 # Isopycnal level depth:
-filo            = 'C:\\Users\yago_\Documents\LOCEAN\Data\OLIV3\oliv3_glob_025_ekf_annual_isolevm.nc'
+filo            = '...\Data\OLIV3\oliv3_glob_025_ekf_annual_isolevm.nc'
 file            = xr.open_dataset(filo)
 h_isolev        = file.variables['h_isolev'].values.T
 h_isolev        = h_isolev[:,:,:,0]
 
 # OLIV3 vertical velocities and 3d grid
-filo            = 'C:\\Users\yago_\Documents\LOCEAN\Data\OLIV3\oliv3_glob_025_ekf_annual_isolevm_5filtr.nc'
+filo            = '...\Data\OLIV3\oliv3_glob_025_ekf_annual_isolevm_5filtr.nc'
 file            = xr.open_dataset(filo)
 lon, lat, iso   = file.variables['longitude'].values.T, file.variables['latitude'].values.T, file.variables['isolev'].values.T
 w               = np.mean(file.variables['w_oliv3_isolevf'].values.T,3)
@@ -29,13 +30,12 @@ w               = np.mean(file.variables['w_oliv3_isolevf'].values.T,3)
 dimlon, dimlat, dimdep = lon.shape[0], lat.shape[1], len(iso)
 
 # Ekman pumping
-filo            = 'C:\\Users\yago_\Documents\LOCEAN\Data\ERA5\ekman_pumping_glob_025_filtered_annual.nc'
+filo            = '...\Data\ERA5\ekman_pumping_glob_025_filtered_annual.nc'
 file            = xr.open_dataset(filo)
 lone, late      = file.variables['longitude'].values.T, file.variables['latitude'].values.T
 wek             = np.mean(file.variables['wek_era5'].values.T,2)
 
 wek[abs(late)<5] = np.nan
-
 
 circshift_lim   = int(len(lon)/2)
 
@@ -45,14 +45,12 @@ RBens1      = RBens1m['RBens1']
 cmp1        = ListedColormap(RBens1)
 
 # %% Figure
-
 scale       = 0.1
 bounds      = [-10,-8,-6,-4,-2,-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6,0.8,1,2,4,6,8,10]
 bounds2     = np.multiply(bounds,scale)
 norm        = mpl.colors.BoundaryNorm(bounds2, cmp1.N)
 
 proj        = ccrs.Robinson(central_longitude=-60)
-
 k           = 20 # 20 sigma 26
 
 fig, axs    = plt.subplots(2, 1, figsize=(17, 17),subplot_kw={"projection": ccrs.Robinson(central_longitude=-60)}, layout='constrained',)
@@ -181,4 +179,4 @@ cb.set_label(label='$m$ $day^{-1}$',size = 18)
 for spine in ax1.spines.values():
         spine.set_linewidth(2)
 
-#plt.savefig('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\review\\figure1_VF.png',bbox_inches='tight', dpi=300)
+plt.savefig('...\figures\figure2.png',bbox_inches='tight', dpi=300)
