@@ -1,3 +1,5 @@
+# FIGURE A1: Intercomparison vertical gradient
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -6,15 +8,13 @@ from matplotlib import cm
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
-
 # GRID:
-meanm   = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\mean_w_womld.mat')
+meanm   = sio.loadmat('...\intercomparison_metrics\\mean_w_womld.mat')
 lonbox5 = meanm['lon_box5m']
 latbox5 = meanm['lat_box5m']
 
 # %%
-slp    = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\slope_w_55new_26_5.mat')['m_55']
-slp    = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/intercomparison_metrics\slope_w_55_26_5.mat')['m_55']
+slp    = sio.loadmat('.../intercomparison_metrics\slope_w_55_26_5.mat')['m_55']
 label_name = [r'(a) $OLIV3$',r'(b) $OMEGA3D$',r'(c) $GLORYS12v1$',r'(d) $ECCOv4r4$']
 
 fig, axes_r = plt.subplots(nrows=4, ncols=1,sharex=True,figsize=(14, 16),subplot_kw={"projection": ccrs.Miller(central_longitude=-60)}, layout='constrained',)
@@ -77,5 +77,4 @@ cbar = plt.colorbar(
 cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$10^{-4}$ $m$ $day^{-1}$ $m^{-1}$',size=20)
 
-#plt.savefig('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\review\\6_vertical_structure_55_VF_appendix_corr.png', bbox_inches='tight', dpi=300)
-
+plt.savefig('...\figures\figureA1.png', bbox_inches='tight', dpi=300)
