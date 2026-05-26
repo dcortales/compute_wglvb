@@ -1,3 +1,4 @@
+# FIGURE 1: Time-mean OLIV3 across isopycnal levels
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib as mpl
@@ -8,19 +9,18 @@ import cartopy.feature as cfeature
 import xarray as xr
 
 # %% Load variables
-
 # MLD
-MLDm            = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\MLD_ARMOR3D_GLOB.mat')
+MLDm            = sio.loadmat('...\MLD_ARMOR3D_GLOB.mat')
 mldcont         = MLDm['mld_contac']
 
 # Isopycnal level depth:
-filo            = 'C:\\Users\yago_\Documents\LOCEAN\Data\OLIV3\oliv3_glob_025_ekf_annual_isolevm.nc'
+filo            = '...\Data\OLIV3\oliv3_glob_025_ekf_annual_isolevm.nc'
 file            = xr.open_dataset(filo)
 h_isolev        = file.variables['h_isolev'].values.T
 h_isolev        = h_isolev[:,:,:,0]
 
 # OLIV3 vertical velocities and 3d grid
-filo            = 'C:\\Users\yago_\Documents\LOCEAN\Data\OLIV3\oliv3_glob_025_ekf_annual_isolevm_5filtr.nc'
+filo            = '...\Data\OLIV3\oliv3_glob_025_ekf_annual_isolevm_5filtr.nc'
 file            = xr.open_dataset(filo)
 lon, lat, iso   = file.variables['longitude'].values.T, file.variables['latitude'].values.T, file.variables['isolev'].values.T
 w               = np.mean(file.variables['w_oliv3_isolevf'].values.T,3)
@@ -35,7 +35,6 @@ RBens1      = RBens1m['RBens1']
 cmp1        = ListedColormap(RBens1)
 
 # %% Figure
-
 scale       = 0.1
 bounds      = [-10,-8,-6,-4,-2,-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6,0.8,1,2,4,6,8,10]
 bounds2     = np.multiply(bounds,scale)
@@ -46,7 +45,6 @@ proj        = ccrs.Robinson(central_longitude=-60)
 fig, axs    = plt.subplots(4, 2, figsize=(17, 19),subplot_kw={"projection": ccrs.Robinson(central_longitude=-60)}, layout='constrained',)
 
 # oliv3:
-
 k = [14,16,18,20,22,25,28,32]
 ll = ['(a)','(b)','(c)','(d)','(e)','(f)','(g)','(h)']
 for ii,ax0 in enumerate(axs.flat):
@@ -123,7 +121,6 @@ for ii,ax0 in enumerate(axs.flat):
             spine.set_linewidth(2)
 
 # Colorbar 
-
 scale        = 0.1
 bounds       = [-10,-8,-6,-4,-2,-1,-0.8,-0.6,-0.4,-0.2,0,0.2,0.4,0.6,0.8,1,2,4,6,8,10]
 bounds2      = np.multiply(bounds,scale)
@@ -144,4 +141,4 @@ cbar = plt.colorbar(
 cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$m$ $day^{-1}$',size=20)
 
-#plt.savefig('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\review\\figure0_VF.png',bbox_inches='tight', dpi=300)
+plt.savefig('...\figures\figure0_VF.png',bbox_inches='tight', dpi=300)
