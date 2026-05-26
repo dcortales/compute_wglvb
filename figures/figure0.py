@@ -1,3 +1,4 @@
+# FIGURE 1: Time-mean OLIV3 across isopycnal levels
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib as mpl
