@@ -1,6 +1,4 @@
-
-## Relative error time-mean w_OGCM/w_GLVB ------------------------------------
-
+# FIGURE 4: OGCM perfect model 
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib as mpl
@@ -9,29 +7,26 @@ from matplotlib import cm
 from matplotlib.colors import ListedColormap
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
-import cartopy.mpl.ticker as cticker
-from cartopy.util import add_cyclic_point
-import matplotlib.ticker as mticker
 import matplotlib.colors as mcolors
 
 # %% Load variables
-file_rho    = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/rho_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat')
+file_rho    = sio.loadmat('.../OGCM/rho_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat')
 lon         = file_rho['LONimone']
 lat         = file_rho['LATimone']
 isopl       = file_rho['isopl']
 rho         = file_rho['rho_int']
 
-file_b    = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/vert_grad_w_wglvb_occitens_glob_025_annual_isolevm_filtr_meters.mat')
+file_b    = sio.loadmat('.../OGCM/vert_grad_w_wglvb_occitens_glob_025_annual_isolevm_filtr_meters.mat')
 wtot_int    = file_b['m_55_tot_int']
 wlvb_int    = file_b['m_55_glvb_int']
 
-file_relerr = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/relerr_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat')
+file_relerr = sio.loadmat('.../OGCM/relerr_w_wglvb_occitens_glob_025_annual_isolevm_filtr.mat')
 relerr      = file_relerr['relerr_int']
 
-file_lvb    = sio.loadmat('C:/Users/yago_/Documents/LOCEAN/Codes/lvb_validity_occitens_glob_025_23yr_isolevm_filtr.mat')
+file_lvb    = sio.loadmat('.../OGCM/lvb_validity_occitens_glob_025_23yr_isolevm_filtr.mat')
 lvb         = file_lvb['ee_isop_int']
 
-MLDm        = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\old_computation\\MLDcont_int_GLOB.mat')
+MLDm        = sio.loadmat('.../OGCM/MLDcont_int_GLOB.mat')
 mldcont     = MLDm['mld_contint']
 
 def truncate_colormap(cmap, minval=0.0, maxval=1.0, n=100):
@@ -119,7 +114,6 @@ cb.set_label(label='Relative error [%]',size = 24)
 for spine in ax0.spines.values():
     spine.set_linewidth(2)
 
-#cmp         = ListedColormap(cmpcorr)
 BrBGcentre  = plt.get_cmap('RdYlBu_r')
 cont_rho    = [-1, 0, 0.5,0.6,0.7,0.8,0.9,1]
 boundstick  = np.arange(-1,1.2,0.2)
@@ -224,7 +218,4 @@ cb.set_label(label='Relative error (%)',size = 24)
 for spine in ax0.spines.values():
     spine.set_linewidth(2)
 
-#plt.savefig('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\review\\2_occitens_global_relerr_rho_vert_grad_VF_corr.png', bbox_inches='tight', dpi=300)
-
-
-
+plt.savefig('...\figures\figure4.png', bbox_inches='tight', dpi=300)
