@@ -1,3 +1,5 @@
+# FIGURE 5: Time-mean intercomparison
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -7,16 +9,16 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
 # GRID:
-meanm   = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\intercomparison_metrics\\mean_w.mat')
+meanm   = sio.loadmat('...\intercomparison_metrics\mean_w.mat')
 lonbox5 = meanm['lon_box5m']
 latbox5 = meanm['lat_box5m']
 
 # MLD mask 
-mldmask_occ = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_mldmask.mat')['mld_cont_bm']
-mldmask_oli = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\oliv3_glob_5_mldmask.mat')['mld_cont_bm']
-mldmask_ecc = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\ecco_glob_5_mldmask.mat')['mld_cont_bm'] 
+mldmask_occ = sio.loadmat('...\Data\\OGCM\\occitens_glob_5_mldmask.mat')['mld_cont_bm']
+mldmask_oli = sio.loadmat('...\\Data\\OGCM\\oliv3_glob_5_mldmask.mat')['mld_cont_bm']
+mldmask_ecc = sio.loadmat('...\\Data\\OGCM\\ecco_glob_5_mldmask.mat')['mld_cont_bm'] 
 
-lvbmask_occ = sio.loadmat('C:\\Users\\yago_\\Documents\\LOCEAN\\Data\\OCCITENS\\occitens_glob_5_lvbmask.mat')['lvb_bm']
+lvbmask_occ = sio.loadmat('...\\Data\\OGCM\\occitens_glob_5_lvbmask.mat')['lvb_bm']
 
 # Mean:
 wm    = meanm['wm']
@@ -67,7 +69,7 @@ for ii,ax0 in enumerate(axes_r.flat):
 
 # MLD mask --------------------
     if ii < 4:
-        plt.rcParams['hatch.color'] = 'white'  # Choose your hatch color here
+        plt.rcParams['hatch.color'] = 'white' 
         plt.rcParams['hatch.linewidth'] = 2.0
         if ind[ii] == 2 or ind[ii] == 3:
             hatch_pcolor = ax0.pcolor(
@@ -145,4 +147,4 @@ cbar = plt.colorbar(
 cbar.ax.tick_params(labelsize=18)
 cbar.set_label(label=r'$m$ $day^{-1}$',size=20)
 
-#plt.savefig('C:\\Users\\yago_\\Documents\\LOCEAN\\OLIV3 paper\\V4 codes\\review\\4_time_mean_w_55_VF.png', bbox_inches='tight', dpi=300)
+plt.savefig('...\figures\figure5.png', bbox_inches='tight', dpi=300)
